@@ -1,9 +1,9 @@
-import Top from "./components/Top/top";
+import Shop from "@/app/components/Menu/Shop/shop";
 
 export default function Home() {
   return (
     <>
-      <Top />
+      <Shop />
     </>
   );
 }

@@ -1,9 +1,9 @@
-import Top from "./components/Top/top";
+import Save from "@/app/components/Menu/Save/save";
 
 export default function Home() {
   return (
     <>
-      <Top />
+      <Save />
     </>
   );
 }
