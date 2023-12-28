@@ -1,12 +1,9 @@
-"use client"
-
-import { Box, Link } from "@mui/material";
-import Login from "./_components/templates/login";
+import Top from "./components/Top/top";
 
 export default function Home() {
   return (
-    <Box>
-      <Login />
-    </Box>
+    <>
+      <Top />
+    </>
   );
 }
