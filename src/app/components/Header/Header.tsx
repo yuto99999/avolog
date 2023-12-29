@@ -11,7 +11,7 @@ const Header = () => {
         </StyledLink>
         <StyledLink href={"/menu/shop"}>Shop</StyledLink>
         <StyledLink href={"/menu/recipe"}>Recipe</StyledLink>
-        <StyledLink href={"/menu/save"}>Save</StyledLink>
+        <StyledLink href={"/menu/mypage"}>Mypage</StyledLink>
       </Box>
       <Box display="flex" alignItems="center" gap={3} mr={10}>
         <StyledLink href={"/auth/register"}>会員登録</StyledLink>
@@ -34,6 +34,7 @@ const StyledHeader = styled(Box)(({ theme }) => ({
   position: "fixed",
   top: 0,
   left: 0,
+  zIndex: 999,
 }));
 
 const StyledAvater = styled(Avatar)(({ theme }) => ({
