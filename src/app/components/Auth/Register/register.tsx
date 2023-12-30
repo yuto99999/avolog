@@ -1,7 +1,15 @@
 "use client";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { Box, Typography, TextField, Button, Alert } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Alert,
+  styled,
+  Link,
+} from "@mui/material";
 import { auth } from "@/lib/firebase";
 
 const Register = () => {
@@ -25,16 +33,37 @@ const Register = () => {
   };
 
   return (
-    <Box width="100%" height="100vh" bgcolor="#F5F4EE">
-      <Box display="flex" flexDirection="column" alignItems="center" pt="11rem">
+    <Box
+      width="100%"
+      height="100vh"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      sx={{
+        backgroundImage: "url(../img/AvoLogo1.png)",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "100%",
+      }}
+    >
+      <Box
+        width="40%"
+        bgcolor="#ffffff"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        pt={8}
+        pb={8}
+        sx={{ opacity: 0.95, borderRadius: 5 }}
+      >
         <Typography
-          fontSize="3rem"
+          fontSize="2.5rem"
           fontFamily="游ゴシック"
           fontWeight="bold"
-          color="#2864F0"
-          mb={2}
+          color="#000000"
+          mb={2.5}
         >
-          新規登録
+          会員登録
         </Typography>
         <TextField
           required
@@ -44,7 +73,7 @@ const Register = () => {
           autoFocus
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          sx={{ width: "25%", m: 1.5 }}
+          sx={{ width: "50%", m: 1.5 }}
         />
         <TextField
           required
@@ -53,59 +82,48 @@ const Register = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          sx={{ width: "25%", m: 1 }}
+          sx={{ width: "50%", m: 1 }}
         />
-        <Button
-          variant="contained"
-          onClick={() => {
-            doRegister();
-          }}
-          sx={{
-            width: "25%",
-            mt: 8,
-            mb: 2,
-            bgcolor: "#2864F0",
-            fontSize: "1.3rem",
-            fontFamily: "游ゴシック",
-            fontWeight: 600,
-            borderRadius: "5rem",
-          }}
-        >
-          登録
-        </Button>
-        {success && (
-          <Alert
-            severity="success"
+        <StyledBtnLink href={"/auth/profile"}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              doRegister();
+            }}
             sx={{
-              width: "25%",
-              mt: 5,
-              fontSize: "1.2rem",
+              width: "50%",
+              mt: 4,
+              mb: 4,
+              fontSize: "1.3rem",
               fontFamily: "游ゴシック",
               fontWeight: 600,
-              alignItems: "center",
+              borderRadius: "5rem",
             }}
           >
-            登録しました
-          </Alert>
-        )}
-        {error && (
-          <Alert
-            severity="error"
-            sx={{
-              width: "25%",
-              mt: 5,
-              fontSize: "1.2rem",
-              fontFamily: "游ゴシック",
-              fontWeight: 600,
-              alignItems: "center",
-            }}
-          >
-            登録できませんでした
-          </Alert>
-        )}
+            登録
+          </Button>
+        </StyledBtnLink>
+        <Typography fontFamily="游ゴシック" fontWeight={500} fontSize="1rem">
+          すでにアカウントをお持ちですか？
+          <StyledLink href={"/auth/login"}>ログイン</StyledLink>
+        </Typography>
       </Box>
     </Box>
   );
 };
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  textDecoration: "none",
+  fontFamily: "游ゴシック",
+  fontWeight: 500,
+  fontSize: "1rem",
+  marginLeft: 2,
+}));
+
+const StyledBtnLink = styled(Link)(({ theme }) => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+}));
 
 export default Register;
