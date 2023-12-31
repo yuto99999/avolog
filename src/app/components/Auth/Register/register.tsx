@@ -91,7 +91,7 @@ const Register = () => {
               doRegister();
             }}
             sx={{
-              width: "50%",
+              width: "100%",
               mt: 4,
               mb: 4,
               fontSize: "1.3rem",
@@ -121,7 +121,7 @@ const StyledLink = styled(Link)(({ theme }) => ({
 }));
 
 const StyledBtnLink = styled(Link)(({ theme }) => ({
-  width: "100%",
+  width: "50%",
   display: "flex",
   justifyContent: "center",
 }));
