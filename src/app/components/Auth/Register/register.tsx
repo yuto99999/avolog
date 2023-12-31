@@ -124,6 +124,7 @@ const StyledBtnLink = styled(Link)(({ theme }) => ({
   width: "50%",
   display: "flex",
   justifyContent: "center",
+  textDecoration: "none",
 }));
 
 export default Register;
