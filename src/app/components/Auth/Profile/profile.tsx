@@ -151,7 +151,6 @@ const Profile = () => {
           </Box>
           <TextField
             required
-            // variant="standard"
             id="name"
             label="ユーザー名"
             name="name"
@@ -160,34 +159,25 @@ const Profile = () => {
             onChange={(e) => setName(e.target.value)}
             sx={{ width: "100%", m: 1.5 }}
           />
-          <StyledBtnLink href={"/"}>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                width: "100%",
-                mt: 4,
-                mb: 4,
-                fontSize: "1.3rem",
-                fontFamily: "游ゴシック",
-                fontWeight: 600,
-                borderRadius: "5rem",
-              }}
-            >
-              {profile ? "更新" : "作成"}
-            </Button>
-          </StyledBtnLink>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              width: "100%",
+              mt: 4,
+              mb: 4,
+              fontSize: "1.3rem",
+              fontFamily: "游ゴシック",
+              fontWeight: 600,
+              borderRadius: "5rem",
+            }}
+          >
+            {profile ? "更新" : "作成"}
+          </Button>
         </Box>
       </Box>
     </Box>
   );
 };
-
-const StyledBtnLink = styled(Link)(({ theme }) => ({
-  width: "100%",
-  display: "flex",
-  justifyContent: "center",
-  textDecoration: "none ",
-}));
 
 export default Profile;
