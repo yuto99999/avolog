@@ -85,7 +85,7 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           sx={{ width: "50%", m: 1 }}
         />
-        <StyledBtnLink href={"/menu/shop"}>
+        <StyledBtnLink href={"/"}>
           <Button
             variant="contained"
             onClick={() => {
