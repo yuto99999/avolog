@@ -84,10 +84,15 @@ const Profile = () => {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      bgcolor="gray"
+      sx={{
+        backgroundImage: "url(../img/AvoLogo1.png)",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "100%",
+      }}
     >
       <Box
-        width="70%"
+        width="65%"
         bgcolor="#ffffff"
         display="flex"
         flexDirection="column"
