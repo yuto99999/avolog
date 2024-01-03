@@ -20,6 +20,7 @@ const Header = () => {
       <Box display="flex" alignItems="center" gap={3} mr={10}>
         <StyledLink href={"/auth/register"}>会員登録</StyledLink>
         <StyledLink href={"/auth/login"}>ログイン</StyledLink>
+        <StyledLink href={"/auth/logout"}>ログアウト</StyledLink>
         <Link href={"/auth/profile"}>
           <StyledAvatar src={profile ? profile.image : ""} alt="アイコン" />
         </Link>
