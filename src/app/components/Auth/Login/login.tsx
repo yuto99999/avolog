@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import {
   Box,
@@ -11,7 +11,6 @@ import {
   styled,
   Link,
 } from "@mui/material";
-import { auth } from "@/lib/firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +19,8 @@ const Login = () => {
   const [error, setError] = useState(false);
 
   const doLogin = () => {
+    const auth = getAuth();
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
