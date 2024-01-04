@@ -94,7 +94,7 @@ const Login = () => {
             doLogin();
           }}
           sx={{
-            width: "100%",
+            width: "50%",
             mt: 4,
             mb: 4,
             fontSize: "1.3rem",
