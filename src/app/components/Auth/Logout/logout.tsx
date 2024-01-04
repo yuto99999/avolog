@@ -17,7 +17,9 @@ const Logout = () => {
         setSuccess(true);
         setError(false);
         console.log("ログアウト成功");
-        router.push("/");
+        setTimeout(() => {
+          router.push("/");
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
