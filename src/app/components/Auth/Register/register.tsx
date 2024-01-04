@@ -84,7 +84,7 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           sx={{ width: "50%", m: 1 }}
         />
-        <StyledBtnLink href={"/auth/profile"}>
+        <StyledBtnLink href={"/"}>
           <Button
             variant="contained"
             onClick={() => {
