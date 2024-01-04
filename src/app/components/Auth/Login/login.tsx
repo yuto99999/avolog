@@ -1,17 +1,16 @@
 "use client";
-import * as React from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import {
   Box,
   Typography,
   TextField,
   Button,
-  Alert,
   styled,
   Link,
 } from "@mui/material";
-import { auth } from "@/lib/firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,16 +18,17 @@ const Login = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const doLogin = () => {
-    // const auth = getAuth();
+  const router = useRouter();
 
+  const doLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         setSuccess(true);
         setError(false);
         console.log(user);
-        console.log("ログイン成功");
+        console.log("ログイン成功！");
+        router.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -88,7 +88,6 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           sx={{ width: "50%", m: 1 }}
         />
-        {/* <StyledBtnLink href={"/"}> */}
         <Button
           variant="contained"
           onClick={() => {
@@ -106,7 +105,6 @@ const Login = () => {
         >
           ログイン
         </Button>
-        {/* </StyledBtnLink> */}
         <Typography fontFamily="游ゴシック" fontWeight={500} fontSize="1rem">
           アカウントをお持ちではありませんか？
           <StyledLink href={"/auth/register"}>会員登録</StyledLink>
@@ -122,13 +120,6 @@ const StyledLink = styled(Link)(({ theme }) => ({
   fontWeight: 500,
   fontSize: "1rem",
   marginLeft: 2,
-}));
-
-const StyledBtnLink = styled(Link)(({ theme }) => ({
-  width: "50%",
-  display: "flex",
-  justifyContent: "center",
-  textDecoration: "none ",
 }));
 
 export default Login;

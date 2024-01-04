@@ -1,12 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { getAuth, signOut } from "firebase/auth";
-import { Box, Button, styled, Link, Typography, Alert } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { Box, Button, styled, Link, Typography, Alert } from "@mui/material";
 
 const Logout = () => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  const router = useRouter();
 
   const doLogout = () => {
     signOut(auth)
@@ -14,6 +17,7 @@ const Logout = () => {
         setSuccess(true);
         setError(false);
         console.log("ログアウト成功");
+        router.push("/");
       })
       .catch((error) => {
         console.log(error);
@@ -54,21 +58,6 @@ const Logout = () => {
         >
           ログアウト
         </Typography>
-        {success && (
-          <Alert
-            severity="success"
-            sx={{
-              mt: 2,
-              fontSize: "1.2rem",
-              fontFamily: "游ゴシック",
-              fontWeight: 600,
-              alignItems: "center",
-              borderRadius: 3,
-            }}
-          >
-            ログアウトしました
-          </Alert>
-        )}
         <Button
           variant="contained"
           onClick={() => {
@@ -90,12 +79,5 @@ const Logout = () => {
     </Box>
   );
 };
-
-const StyledBtnLink = styled(Link)(({ theme }) => ({
-  width: "50%",
-  display: "flex",
-  justifyContent: "center",
-  textDecoration: "none ",
-}));
 
 export default Logout;

@@ -1,26 +1,20 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Alert,
-  Typography,
-  Box,
-  TextField,
-  Button,
-  Avatar,
-  styled,
-  Link,
-} from "@mui/material";
+import { useRouter } from "next/navigation";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
 import useUser from "@/lib/useUser";
 import useProfile from "@/lib/useProfile";
 import { store, storage } from "@/lib/firebase";
+import { Typography, Box, TextField, Button, Avatar } from "@mui/material";
 
 const Profile = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState<File | null>();
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  const router = useRouter();
 
   const firestorage = storage;
   const firestore = store;
@@ -65,7 +59,8 @@ const Profile = () => {
       }
       setSuccess(true);
       setError(false);
-      console.log("プロフィール設定成功")
+      console.log("プロフィール設定成功!");
+      router.push("/");
     } catch (err) {
       console.log(err);
       setError(true);
