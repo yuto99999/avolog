@@ -110,7 +110,6 @@ const Profile = () => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
             }}
           >
@@ -123,7 +122,7 @@ const Profile = () => {
                   : ""
               }
               alt="アイコン"
-              sx={{ width: 80, height: 80 }}
+              sx={{ width: 80, height: 80, mr: 5 }}
             />
             <Box>
               <input
@@ -150,31 +149,33 @@ const Profile = () => {
               </label>
             </Box>
           </Box>
-          <TextField
-            required
-            id="name"
-            label="ユーザー名"
-            name="name"
-            autoComplete="name"
-            autoFocus
-            onChange={(e) => setName(e.target.value)}
-            sx={{ width: "100%", m: 1.5 }}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              width: "100%",
-              mt: 4,
-              mb: 4,
-              fontSize: "1.3rem",
-              fontFamily: "游ゴシック",
-              fontWeight: 600,
-              borderRadius: "5rem",
-            }}
-          >
-            {profile ? "更新" : "作成"}
-          </Button>
+          <Box display="flex" flexDirection="column" alignItems="center" mt={2}>
+            <TextField
+              required
+              id="name"
+              label="ユーザー名"
+              name="name"
+              autoComplete="name"
+              autoFocus
+              onChange={(e) => setName(e.target.value)}
+              sx={{ width: "100%", m: 1.5 }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                width: "100%",
+                mt: 4,
+                mb: 4,
+                fontSize: "1.3rem",
+                fontFamily: "游ゴシック",
+                fontWeight: 600,
+                borderRadius: "5rem",
+              }}
+            >
+              {profile ? "更新" : "作成"}
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>
