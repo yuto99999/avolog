@@ -1,16 +1,16 @@
 "use client";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import {
   Box,
   Typography,
   TextField,
   Button,
-  Alert,
   styled,
   Link,
 } from "@mui/material";
-import { auth } from "@/lib/firebase";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -18,14 +18,17 @@ const Register = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
+  const router = useRouter();
+
   const doRegister = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        console.log("登録成功");
+        console.log("登録成功！");
         setSuccess(true);
         setError(false);
+        router.push("/auth/login");
       })
       .catch((error) => {
         console.log(error);
@@ -85,25 +88,23 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           sx={{ width: "50%", m: 1 }}
         />
-        {/* <StyledBtnLink href={"/"}> */}
-          <Button
-            variant="contained"
-            onClick={() => {
-              doRegister();
-            }}
-            sx={{
-              width: "100%",
-              mt: 4,
-              mb: 4,
-              fontSize: "1.3rem",
-              fontFamily: "游ゴシック",
-              fontWeight: 600,
-              borderRadius: "5rem",
-            }}
-          >
-            登録
-          </Button>
-        {/* </StyledBtnLink> */}
+        <Button
+          variant="contained"
+          onClick={() => {
+            doRegister();
+          }}
+          sx={{
+            width: "100%",
+            mt: 4,
+            mb: 4,
+            fontSize: "1.3rem",
+            fontFamily: "游ゴシック",
+            fontWeight: 600,
+            borderRadius: "5rem",
+          }}
+        >
+          登録
+        </Button>
         <Typography fontFamily="游ゴシック" fontWeight={500} fontSize="1rem">
           すでにアカウントをお持ちですか？
           <StyledLink href={"/auth/login"}>ログイン</StyledLink>
@@ -119,13 +120,6 @@ const StyledLink = styled(Link)(({ theme }) => ({
   fontWeight: 500,
   fontSize: "1rem",
   marginLeft: 2,
-}));
-
-const StyledBtnLink = styled(Link)(({ theme }) => ({
-  width: "50%",
-  display: "flex",
-  justifyContent: "center",
-  textDecoration: "none",
 }));
 
 export default Register;
