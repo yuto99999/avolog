@@ -13,6 +13,7 @@ const Logout = () => {
       .then(() => {
         setSuccess(true);
         setError(false);
+        console.log("ログアウト成功");
       })
       .catch((error) => {
         console.log(error);

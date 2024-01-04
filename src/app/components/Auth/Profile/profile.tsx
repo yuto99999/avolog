@@ -65,6 +65,7 @@ const Profile = () => {
       }
       setSuccess(true);
       setError(false);
+      console.log("プロフィール設定成功")
     } catch (err) {
       console.log(err);
       setError(true);

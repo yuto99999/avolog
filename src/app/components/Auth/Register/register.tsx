@@ -23,6 +23,7 @@ const Register = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
+        console.log("登録成功");
         setSuccess(true);
         setError(false);
       })
@@ -84,7 +85,7 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
           sx={{ width: "50%", m: 1 }}
         />
-        <StyledBtnLink href={"/"}>
+        {/* <StyledBtnLink href={"/"}> */}
           <Button
             variant="contained"
             onClick={() => {
@@ -102,7 +103,7 @@ const Register = () => {
           >
             登録
           </Button>
-        </StyledBtnLink>
+        {/* </StyledBtnLink> */}
         <Typography fontFamily="游ゴシック" fontWeight={500} fontSize="1rem">
           すでにアカウントをお持ちですか？
           <StyledLink href={"/auth/login"}>ログイン</StyledLink>

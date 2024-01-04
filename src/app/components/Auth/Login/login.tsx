@@ -11,6 +11,7 @@ import {
   styled,
   Link,
 } from "@mui/material";
+import { auth } from "@/lib/firebase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ const Login = () => {
   const [error, setError] = useState(false);
 
   const doLogin = () => {
-    const auth = getAuth();
+    // const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -27,6 +28,7 @@ const Login = () => {
         setSuccess(true);
         setError(false);
         console.log(user);
+        console.log("ログイン成功");
       })
       .catch((err) => {
         console.log(err);
@@ -86,25 +88,25 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           sx={{ width: "50%", m: 1 }}
         />
-        <StyledBtnLink href={"/"}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              doLogin();
-            }}
-            sx={{
-              width: "100%",
-              mt: 4,
-              mb: 4,
-              fontSize: "1.3rem",
-              fontFamily: "游ゴシック",
-              fontWeight: 600,
-              borderRadius: "5rem",
-            }}
-          >
-            ログイン
-          </Button>
-        </StyledBtnLink>
+        {/* <StyledBtnLink href={"/"}> */}
+        <Button
+          variant="contained"
+          onClick={() => {
+            doLogin();
+          }}
+          sx={{
+            width: "100%",
+            mt: 4,
+            mb: 4,
+            fontSize: "1.3rem",
+            fontFamily: "游ゴシック",
+            fontWeight: 600,
+            borderRadius: "5rem",
+          }}
+        >
+          ログイン
+        </Button>
+        {/* </StyledBtnLink> */}
         <Typography fontFamily="游ゴシック" fontWeight={500} fontSize="1rem">
           アカウントをお持ちではありませんか？
           <StyledLink href={"/auth/register"}>会員登録</StyledLink>
