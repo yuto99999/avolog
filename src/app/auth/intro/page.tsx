@@ -1,4 +1,4 @@
-import Intro from "@/app/components/Auth/Register/intro";
+import Intro from "@/app/components/Auth/Intro/intro";
 
 export default function Home() {
   return (
