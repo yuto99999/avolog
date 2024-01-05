@@ -28,7 +28,7 @@ const Register = () => {
         console.log("登録成功！");
         setSuccess(true);
         setError(false);
-        router.push("/auth/login");
+        router.push("/auth/intro");
       })
       .catch((error) => {
         console.log(error);
