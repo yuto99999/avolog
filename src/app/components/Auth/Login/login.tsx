@@ -145,7 +145,7 @@ const Login = () => {
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert severity="success" sx={{ width: "100%" }}>
-            ログインに成功しました！
+            ログインしました！
           </Alert>
         </Snackbar>
       )}
