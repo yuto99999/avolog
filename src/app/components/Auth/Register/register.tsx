@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
@@ -11,14 +11,27 @@ import {
   styled,
   Link,
 } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const router = useRouter();
+
+  const vertical = "top";
+  const horizontal = "right";
 
   const doRegister = () => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -28,12 +41,27 @@ const Register = () => {
         console.log("登録成功！");
         setSuccess(true);
         setError(false);
-        router.push("/auth/intro");
+        setOpen(true);
+        setTimeout(() => {
+          router.push("/auth/intro");
+        }, 1200);
       })
       .catch((error) => {
         console.log(error);
         setError(true);
+        setOpen(true);
       });
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -110,6 +138,29 @@ const Register = () => {
           <StyledLink href={"/auth/login"}>ログイン</StyledLink>
         </Typography>
       </Box>
+      {success && (
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="success" sx={{ width: "100%" }}>
+            登録しました！
+          </Alert>
+        </Snackbar>
+      )}
+      {error && (
+        <Snackbar
+          open={open}
+          onClose={handleClose}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="error" onClose={handleClose} sx={{ width: "100%" }}>
+            登録に失敗しました
+          </Alert>
+        </Snackbar>
+      )}
     </Box>
   );
 };
