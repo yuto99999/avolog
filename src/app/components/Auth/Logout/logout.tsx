@@ -3,13 +3,26 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { Box, Button, styled, Link, Typography, Alert } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Logout = () => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const router = useRouter();
+
+  const vertical = "top";
+  const horizontal = "right";
 
   const doLogout = () => {
     signOut(auth)
@@ -17,14 +30,28 @@ const Logout = () => {
         setSuccess(true);
         setError(false);
         console.log("ログアウト成功");
+        setOpen(true);
+
         setTimeout(() => {
           router.push("/");
-        }, 1000);
+        }, 1200);
       })
       .catch((error) => {
         console.log(error);
         setError(true);
+        setOpen(true);
       });
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -78,6 +105,29 @@ const Logout = () => {
           ログアウト
         </Button>
       </Box>
+      {success && (
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="success" sx={{ width: "100%" }}>
+            ログアウトしました！
+          </Alert>
+        </Snackbar>
+      )}
+      {error && (
+        <Snackbar
+          open={open}
+          onClose={handleClose}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="error" onClose={handleClose} sx={{ width: "100%" }}>
+            ログインに失敗しました
+          </Alert>
+        </Snackbar>
+      )}
     </Box>
   );
 };
