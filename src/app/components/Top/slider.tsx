@@ -13,7 +13,6 @@ const Slider = () => (
       display="flex"
       alignItems="center"
       justifyContent="center"
-      pt="7rem"
     >
       <Splide
         aria-label="トップ画像"
