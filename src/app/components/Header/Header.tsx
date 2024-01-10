@@ -1,11 +1,8 @@
 "use client";
 import { Avatar, Box, Link, Typography, styled } from "@mui/material";
-import useProfile from "@/lib/useProfile";
+import AccountMenu from "./accountMenu";
 
 const Header = () => {
-  const profileData = useProfile();
-  const profile = profileData.profile;
-
   return (
     <StyledHeader>
       <Box display="flex" alignItems="center" gap={10} ml={12}>
@@ -13,17 +10,14 @@ const Header = () => {
           <StyledAvatar alt="AvoLogロゴ" src="../img/AvoLogo.png" />
           <StyledTitle>AvoLog</StyledTitle>
         </StyledLink>
-        <StyledLink href={"/menu/shop"}>Shop</StyledLink>
-        <StyledLink href={"/menu/recipe"}>Recipe</StyledLink>
-        <StyledLink href={"/menu/mypage"}>Mypage</StyledLink>
+        <StyledLink href={"/menu/shop"}>お店</StyledLink>
+        <StyledLink href={"/menu/recipe"}>レシピ</StyledLink>
+        <StyledLink href={"/menu/mypage"}>マイページ</StyledLink>
       </Box>
       <Box display="flex" alignItems="center" gap={3} mr={10}>
         <StyledLink href={"/auth/register"}>会員登録</StyledLink>
         <StyledLink href={"/auth/login"}>ログイン</StyledLink>
-        <StyledLink href={"/auth/logout"}>ログアウト</StyledLink>
-        <Link href={"/auth/profile"}>
-          <StyledAvatar src={profile ? profile.image : ""} alt="アイコン" />
-        </Link>
+        <AccountMenu />
       </Box>
     </StyledHeader>
   );
