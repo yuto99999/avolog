@@ -5,7 +5,7 @@ import RecipeRank from "./recipeRank";
 
 const Top = () => {
   return (
-    <Box width="100%">
+    <Box width="100%" mt="7rem">
       <Slider />
       <ShopRank />
       <RecipeRank />
