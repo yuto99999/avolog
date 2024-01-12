@@ -6,7 +6,6 @@ import Post from "./post";
 const Shop = () => {
   return (
     <Box width="100%" minHeight="100vh" pt="15rem">
-      <Btn />
       <Post />
     </Box>
   );
