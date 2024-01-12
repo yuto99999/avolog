@@ -12,7 +12,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import Logout from "@mui/icons-material/Logout";
-import Settings from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 
