@@ -1,11 +1,10 @@
 "use client";
 import { Box, Typography } from "@mui/material";
-import Btn from "./btn";
-import Post from "./post";
+import Post from "./Post/post";
 
 const Shop = () => {
   return (
-    <Box width="100%" minHeight="100vh" pt="15rem">
+    <Box width="100%" minHeight="100vh" mt="10rem" >
       <Post />
     </Box>
   );
