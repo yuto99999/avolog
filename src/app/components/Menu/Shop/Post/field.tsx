@@ -169,7 +169,7 @@ const Field = () => {
             <Rating
               name="half-rating"
               defaultValue={2.5}
-              precision={0.1}
+              precision={0.5}
               value={rate}
               onChange={(e, newValue) => {
                 setRate(newValue !== null ? newValue : 0);
