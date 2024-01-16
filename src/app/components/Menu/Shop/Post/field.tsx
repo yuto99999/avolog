@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { store } from "@/lib/firebase";
+import useProfile from "@/lib/useProfile";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { PrefList } from "@/data/Prefectures";
 import { BudgetList } from "@/data/Budget";
 import {
   Box,
-  Typography,
   TextField,
   Button,
   Rating,
@@ -37,6 +37,9 @@ const Field = () => {
   const [budget, setBudget] = useState("");
   const [rate, setRate] = useState(0);
 
+  const profileData = useProfile();
+  const profile = profileData.profile;
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -53,6 +56,11 @@ const Field = () => {
         budget,
         rate,
         createdAt: Timestamp.fromDate(new Date()),
+        user: {
+          name: profile?.name,
+          image: profile?.image,
+          uid: profile?.uid,
+        },
       });
     } catch (e) {
       console.log(e);
