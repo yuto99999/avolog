@@ -5,6 +5,10 @@ export type Budget = {
 
 export const BudgetList: Budget[] = [
   {
+    code: 0,
+    price: "ー",
+  },
+  {
     code: 1,
     price: "～999",
   },
