@@ -1,7 +1,7 @@
 "use client";
-import { Box, Typography } from "@mui/material";
-import Post from "./Post/post";
+import { Box } from "@mui/material";
 import DisplayShop from "./displayShop";
+import SerchBox from "./serchBox";
 
 const Shop = () => {
   return (
@@ -11,7 +11,7 @@ const Shop = () => {
       pt="6.5rem"
       sx={{ backgroundColor: "#F8F9F9" }}
     >
-      {/* <Post /> */}
+      <SerchBox />
       <DisplayShop />
     </Box>
   );
