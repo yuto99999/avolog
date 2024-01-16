@@ -31,7 +31,6 @@ const Logout = () => {
         setError(false);
         console.log("ログアウト成功");
         setOpen(true);
-
         setTimeout(() => {
           router.push("/");
         }, 1200);
