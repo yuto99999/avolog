@@ -49,8 +49,8 @@ export default function Mypage() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Save" />
-          <Tab label="Post" />
+          <Tab label="保存" />
+          <Tab label="投稿" />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
