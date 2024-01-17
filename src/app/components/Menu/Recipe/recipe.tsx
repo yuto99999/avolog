@@ -2,8 +2,13 @@ import { Box, Typography } from "@mui/material";
 
 const Recipe = () => {
   return (
-    <Box bgcolor="#00bfff" width="100%" height="50vh">
-      <Typography>Recipe</Typography>
+    <Box
+    width="100%"
+    minHeight="100vh"
+    pt="6.5rem"
+    sx={{ backgroundColor: "#F8F9F9" }}
+  >
+      <Typography>レシピ</Typography>
     </Box>
   );
 };
