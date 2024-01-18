@@ -19,6 +19,8 @@ import {
   List,
   ListItem,
 } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 
 const style = {
   p: 0,
@@ -29,13 +31,27 @@ const style = {
   backgroundColor: "background.paper",
 };
 
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const Field = () => {
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
+
   const [name, setName] = useState("");
   const [prefecture, setPrefecture] = useState("");
   const [address, setAddress] = useState("");
   const [category, setCategory] = useState("");
   const [budget, setBudget] = useState("");
   const [rate, setRate] = useState(0);
+
+  const vertical = "top";
+  const horizontal = "right";
 
   const profileData = useProfile();
   const profile = profileData.profile;
@@ -62,8 +78,12 @@ const Field = () => {
           uid: profile?.uid,
         },
       });
+      setSuccess(true);
+      setOpen(true);
     } catch (e) {
       console.log(e);
+      setError(true);
+      setOpen(true);
     }
   };
 
@@ -73,6 +93,17 @@ const Field = () => {
 
   const handleChange2 = (event: SelectChangeEvent) => {
     setBudget(event.target.value as string);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -192,6 +223,29 @@ const Field = () => {
       >
         投稿
       </Button>
+      {success && (
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="success" sx={{ width: "100%" }}>
+            投稿しました！
+          </Alert>
+        </Snackbar>
+      )}
+      {error && (
+        <Snackbar
+          open={open}
+          onClose={handleClose}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="error" onClose={handleClose} sx={{ width: "100%" }}>
+            投稿に失敗しました
+          </Alert>
+        </Snackbar>
+      )}
     </Box>
   );
 };
