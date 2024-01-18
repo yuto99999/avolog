@@ -8,7 +8,7 @@ const useFirebase = (data: string) => {
   useEffect(() => {
     const firestore = store;
     const docRef = collection(firestore, data);
-    const queryRef = query(docRef, orderBy("createdAt"));
+    const queryRef = query(docRef, orderBy("createdAt", "desc"));
     const unsub = onSnapshot(queryRef, (snapshot) => {
       let results: any = [];
       snapshot.docs.forEach((doc) => {
