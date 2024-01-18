@@ -5,12 +5,7 @@ import SerchBox from "./serchBox";
 
 const Shop = () => {
   return (
-    <Box
-      width="100%"
-      minHeight="100vh"
-      pt="6.5rem"
-      sx={{ backgroundColor: "#F8F9F9" }}
-    >
+    <Box width="100%" minHeight="100vh" pt="6.5rem">
       <SerchBox />
       <DisplayShop />
     </Box>
