@@ -51,25 +51,27 @@ const ShopRank = () => {
                 }}
               >
                 <StyledImage src={"../img/top/top2.png"} />
-                <Typography
-                  pt={1.5}
-                  pl={1.8}
-                  fontFamily="游ゴシック"
-                  fontWeight="bold"
-                  fontSize="1rem"
-                >
-                  {shop.name}
-                </Typography>
-                <Typography
-                  pt={1.2}
-                  pl={1.8}
-                  fontFamily="游ゴシック"
-                  fontWeight="bold"
-                  fontSize="0.85rem"
-                  color="GrayText"
-                >
-                  {shop.prefecture}
-                </Typography>
+                <Box height="5.5rem">
+                  <Typography
+                    pt={1.5}
+                    pl={1.8}
+                    fontFamily="游ゴシック"
+                    fontWeight="bold"
+                    fontSize="1rem"
+                  >
+                    {shop.name}
+                  </Typography>
+                  <Typography
+                    pt={1.2}
+                    pl={1.8}
+                    fontFamily="游ゴシック"
+                    fontWeight="bold"
+                    fontSize="0.85rem"
+                    color="GrayText"
+                  >
+                    {shop.prefecture}
+                  </Typography>
+                </Box>
                 <Box display="flex" alignItems="center" p={1.2}>
                   <Rating
                     name="half-rating-read"
