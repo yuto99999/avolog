@@ -36,7 +36,7 @@ const DisplayShop = () => {
             justifyContent="center"
           >
             <Box
-              width="85%"
+              width="90%"
               mb={5}
               sx={{ backgroundColor: "#ffffff", borderRadius: 3 }}
             >
