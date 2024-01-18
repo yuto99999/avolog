@@ -1,6 +1,14 @@
 import { Timestamp } from "firebase/firestore";
 import useFirebase from "@/lib/useFirebase";
-import { Box, Typography, Avatar, Rating, styled, Grid } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Avatar,
+  Rating,
+  styled,
+  Grid,
+  Card,
+} from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import LightModeIcon from "@mui/icons-material/LightMode";
 
@@ -24,8 +32,8 @@ const DisplayShop = () => {
   const { documents: shops } = useFirebase("Shop");
 
   return (
-    <Box p={3} pl={5} display="flex">
-      <Grid container spacing={2}>
+    <Box p={3} pl={12} pr={12} display="flex">
+      <Grid container spacing={5}>
         {shops.map((shop: Shop) => (
           <Grid
             item
@@ -35,38 +43,85 @@ const DisplayShop = () => {
             display="flex"
             justifyContent="center"
           >
-            <Box
-              width="90%"
-              mb={5}
-              sx={{ backgroundColor: "#ffffff", borderRadius: 3 }}
+            <Card
+              sx={{
+                width: "100%",
+                mb: 5,
+                boxShadow: 3,
+                borderRadius: 3,
+              }}
             >
               <Box display="flex" alignItems="center" p={1}>
                 <Avatar src={shop.user.image ? shop.user.image : ""} alt="" />
-                <Typography pl={1.5}>{shop.user.name}</Typography>
+                <Typography
+                  pl={1.5}
+                  fontFamily="游ゴシック"
+                  fontWeight="bold"
+                  fontSize="1rem"
+                >
+                  {shop.user.name}
+                </Typography>
               </Box>
               <StyledImage src={"../img/top/top2.png"} />
-              <Typography p={0.7}>{shop.name}</Typography>
-              <Typography p={0.7}>{shop.address}</Typography>
-              <Box display="flex">
+              <Typography
+                pt={1.5}
+                pl={1.8}
+                fontFamily="游ゴシック"
+                fontWeight="bold"
+                fontSize="1.2rem"
+              >
+                {shop.name}
+              </Typography>
+              <Typography
+                pt={1}
+                pl={1.8}
+                fontFamily="游ゴシック"
+                fontWeight="bold"
+                fontSize="0.9rem"
+              >
+                {shop.address}
+              </Typography>
+              <Box display="flex" pl={1} pt={0.3}>
                 <Box p={0.7} display="flex" alignItems="center">
                   <LightModeIcon fontSize="small" />
-                  <Typography pl={0.5}>{shop.budget}</Typography>
+                  <Typography
+                    pl={0.5}
+                    fontFamily="游ゴシック"
+                    fontWeight="bold"
+                    fontSize="0.9rem"
+                  >
+                    {shop.budget}
+                  </Typography>
                 </Box>
                 <Box p={0.7} display="flex" alignItems="center">
                   <BedtimeIcon fontSize="small" />
-                  <Typography pl={0.5}>{shop.budget}</Typography>
+                  <Typography
+                    pl={0.5}
+                    fontFamily="游ゴシック"
+                    fontWeight="bold"
+                    fontSize="0.9rem"
+                  >
+                    {shop.budget}
+                  </Typography>
                 </Box>
               </Box>
-              <Box p={0.7} pb={1.3} display="flex" alignItems="center">
+              <Box pb={1.2} pl={1.5} display="flex" alignItems="center">
                 <Rating
                   name="half-rating-read"
                   defaultValue={shop.rate}
                   precision={0.1}
                   readOnly
                 />
-                <Typography pl={1}>{shop.rate}</Typography>
+                <Typography
+                  pl={1}
+                  fontFamily="游ゴシック"
+                  fontWeight="bold"
+                  fontSize="0.9rem"
+                >
+                  {shop.rate}
+                </Typography>
               </Box>
-            </Box>
+            </Card>
           </Grid>
         ))}
       </Grid>
