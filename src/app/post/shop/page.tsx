@@ -1,4 +1,4 @@
-import Post from "@/app/components/Menu/Post/post";
+import Post from "@/app/components/Post/post";
 
 export default function Home() {
   return (

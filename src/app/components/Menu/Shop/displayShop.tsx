@@ -15,7 +15,8 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 interface Shop {
   id: string;
   address: string;
-  budget: string;
+  budgetL: string;
+  budgetD: string;
   category: string;
   name: string;
   prefecture: string;
@@ -90,7 +91,7 @@ const DisplayShop = () => {
                     fontWeight="bold"
                     fontSize="0.9rem"
                   >
-                    {shop.budget}
+                    {shop.budgetL}
                   </Typography>
                 </Box>
                 <Box p={0.7} display="flex" alignItems="center">
@@ -101,7 +102,7 @@ const DisplayShop = () => {
                     fontWeight="bold"
                     fontSize="0.9rem"
                   >
-                    {shop.budget}
+                    {shop.budgetD}
                   </Typography>
                 </Box>
               </Box>
