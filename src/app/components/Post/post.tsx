@@ -3,9 +3,9 @@ import Field from "./field";
 
 const Post = () => {
   return (
-    <Box>
+    <>
       <Field />
-    </Box>
+    </>
   );
 };
 
