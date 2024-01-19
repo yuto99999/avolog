@@ -11,13 +11,10 @@ import {
 
 interface Shop {
   id: string;
-  category: string;
+  image: string;
   name: string;
   prefecture: string;
   rate: number;
-  user: {
-    uid: string;
-  };
 }
 
 const ShopRank = () => {
@@ -50,7 +47,7 @@ const ShopRank = () => {
                   borderRadius: 3,
                 }}
               >
-                <StyledImage src={"../img/top/top2.png"} />
+                <StyledImage src={shop.image} />
                 <Box height="5.5rem">
                   <Typography
                     pt={1.5}
