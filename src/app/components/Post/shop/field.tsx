@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { store } from "@/lib/firebase";
+import { useRouter } from "next/navigation";
+import { store, storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import useProfile from "@/lib/useProfile";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { PrefList } from "@/data/Prefectures";
@@ -17,6 +19,7 @@ import {
   SelectChangeEvent,
   styled,
   Typography,
+  Avatar,
 } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
@@ -34,6 +37,7 @@ const Field = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
+  const [image, setImage] = useState<File | null>();
   const [name, setName] = useState("");
   const [prefecture, setPrefecture] = useState("");
   const [address, setAddress] = useState("");
@@ -48,31 +52,62 @@ const Field = () => {
   const profileData = useProfile();
   const profile = profileData.profile;
 
+  const router = useRouter();
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     const firestore = store;
+    const firestorage = storage;
 
     try {
       const docRef = collection(firestore, "Shop");
 
-      await addDoc(docRef, {
-        name,
-        prefecture,
-        address,
-        genre,
-        budgetL,
-        budgetD,
-        rate,
-        createdAt: Timestamp.fromDate(new Date()),
-        user: {
-          name: profile?.name,
-          image: profile?.image,
-          uid: profile?.uid,
-        },
-      });
+      if (image) {
+        const imageRef = ref(firestorage, image.name);
+        uploadBytes(imageRef, image).then(() => {
+          getDownloadURL(imageRef).then(async (url) => {
+            await addDoc(docRef, {
+              image:url,
+              name,
+              prefecture,
+              address,
+              genre,
+              budgetL,
+              budgetD,
+              rate,
+              createdAt: Timestamp.fromDate(new Date()),
+              user: {
+                name: profile?.name,
+                image: profile?.image,
+                uid: profile?.uid,
+              },
+            });
+          });
+        });
+      } else {
+        await addDoc(docRef, {
+          image: "",
+          name,
+          prefecture,
+          address,
+          genre,
+          budgetL,
+          budgetD,
+          rate,
+          createdAt: Timestamp.fromDate(new Date()),
+          user: {
+            name: profile?.name,
+            image: profile?.image,
+            uid: profile?.uid,
+          },
+        });
+      }
       setSuccess(true);
       setOpen(true);
+      setTimeout(() => {
+        router.push("/");
+      }, 1200);
     } catch (e) {
       console.log(e);
       setError(true);
@@ -80,20 +115,26 @@ const Field = () => {
     }
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleChangeImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files !== null) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const handleChangePref = (event: SelectChangeEvent) => {
     setPrefecture(event.target.value as string);
   };
 
-  const handleChange2 = (event: SelectChangeEvent) => {
+  const handleChangeG = (event: SelectChangeEvent) => {
+    setGenre(event.target.value as string);
+  };
+
+  const handleChangeBL = (event: SelectChangeEvent) => {
     setBudgetL(event.target.value as string);
   };
 
-  const handleChange3 = (event: SelectChangeEvent) => {
+  const handleChangeBD = (event: SelectChangeEvent) => {
     setBudgetD(event.target.value as string);
-  };
-
-  const handleChange4 = (event: SelectChangeEvent) => {
-    setGenre(event.target.value as string);
   };
 
   const handleClose = (
@@ -128,11 +169,31 @@ const Field = () => {
         display="flex"
         flexDirection="column"
         alignItems="center"
-        mt={8}
-        pt={8}
-        pb={8}
+        mt={15}
+        mb={15}
+        pt={6}
+        pb={6}
         sx={{ opacity: 0.95, borderRadius: 5 }}
       >
+        <StyledImgBox>
+          <Box width="30%" pl="10%">
+            <input
+              id="image"
+              type="file"
+              accept="image/*"
+              onChange={handleChangeImg}
+              style={{ display: "none" }}
+            />
+            <label htmlFor="image">
+              <StyledImgBtn>写真を追加</StyledImgBtn>
+            </label>
+          </Box>
+          <Avatar
+            variant="square"
+            src={image ? URL.createObjectURL(image) : ""}
+            sx={{ width: "50%", height: "auto" }}
+          />
+        </StyledImgBox>
         <StyledBox>
           <StyledTitle>店名</StyledTitle>
           <TextField
@@ -151,7 +212,7 @@ const Field = () => {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={prefecture}
-              onChange={handleChange}
+              onChange={handleChangePref}
             >
               {PrefList.map((prefecture) => (
                 <MenuItem key={prefecture.prefCode} value={prefecture.prefName}>
@@ -179,7 +240,7 @@ const Field = () => {
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={genre}
-              onChange={handleChange4}
+              onChange={handleChangeG}
             >
               {GenreList.map((genre) => (
                 <MenuItem key={genre.code} value={genre.name}>
@@ -198,7 +259,7 @@ const Field = () => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={budgetL}
-                onChange={handleChange2}
+                onChange={handleChangeBL}
               >
                 {BudgetList.map((budget) => (
                   <MenuItem key={budget.code} value={budget.price}>
@@ -213,7 +274,7 @@ const Field = () => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={budgetD}
-                onChange={handleChange3}
+                onChange={handleChangeBD}
               >
                 {BudgetList.map((budget) => (
                   <MenuItem key={budget.code} value={budget.price}>
@@ -240,7 +301,7 @@ const Field = () => {
           variant="contained"
           type="submit"
           sx={{
-            width: "40%",
+            width: "50%",
             fontSize: "1.3rem",
             fontFamily: "游ゴシック",
             fontWeight: 600,
@@ -250,7 +311,7 @@ const Field = () => {
           投稿
         </Button>
       </Box>
-      {/* {success && (
+      {success && (
         <Snackbar
           open={open}
           autoHideDuration={6000}
@@ -272,7 +333,7 @@ const Field = () => {
             投稿に失敗しました
           </Alert>
         </Snackbar>
-      )} */}
+      )}
     </Box>
   );
 };
@@ -295,6 +356,25 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
   fontFamily: "游ゴシック",
   fontSize: "1.5rem",
   fontWeight: "bold",
+}));
+
+const StyledImgBtn = styled("span")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "cenetr",
+  fontFamily: "游ゴシック",
+  fontSize: "1.5rem",
+  fontWeight: "bold",
+  variant: "text",
+  cursor: "pointer",
+}));
+
+const StyledImgBox = styled(Box)(({ theme }) => ({
+  width: "100%",
+  component: "label",
+  display: "flex",
+  justifyContent: "cenetr",
+  marginBottom: "2rem",
 }));
 
 export default Field;
