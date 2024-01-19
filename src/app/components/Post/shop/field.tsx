@@ -54,7 +54,7 @@ const Field = () => {
 
   const router = useRouter();
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const firestore = store;
@@ -106,7 +106,7 @@ const Field = () => {
       setSuccess(true);
       setOpen(true);
       setTimeout(() => {
-        router.push("/");
+        router.push("/menu/shop");
       }, 1200);
     } catch (e) {
       console.log(e);
