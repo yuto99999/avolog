@@ -6,7 +6,7 @@ const SerchBox = () => {
   const router = useRouter();
 
   const onClick = () => {
-    router.push("/menu/post");
+    router.push("/post/shop");
   };
 
   return (
