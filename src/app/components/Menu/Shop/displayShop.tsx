@@ -15,9 +15,10 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 interface Shop {
   id: string;
   address: string;
+  image: string;
   budgetL: string;
   budgetD: string;
-  category: string;
+  genre: string;
   name: string;
   prefecture: string;
   rate: number;
@@ -63,7 +64,7 @@ const DisplayShop = () => {
                   {shop.user.name}
                 </Typography>
               </Box>
-              <StyledImage src={"../img/top/top2.png"} />
+              <StyledImage src={shop.image} />
               <Typography
                 pt={1.5}
                 pl={1.8}
