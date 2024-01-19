@@ -34,7 +34,6 @@ const Field = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
-
   const [name, setName] = useState("");
   const [prefecture, setPrefecture] = useState("");
   const [address, setAddress] = useState("");
@@ -251,7 +250,7 @@ const Field = () => {
           投稿
         </Button>
       </Box>
-      {success && (
+      {/* {success && (
         <Snackbar
           open={open}
           autoHideDuration={6000}
@@ -273,7 +272,7 @@ const Field = () => {
             投稿に失敗しました
           </Alert>
         </Snackbar>
-      )}
+      )} */}
     </Box>
   );
 };
