@@ -8,6 +8,7 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { PrefList } from "@/data/Prefectures";
 import { BudgetList } from "@/data/Budget";
 import { GenreList } from "@/data/Genre";
+import { RateList } from "@/data/RateList";
 import {
   Box,
   TextField,
@@ -25,6 +26,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -68,7 +70,7 @@ const Field = () => {
         uploadBytes(imageRef, image).then(() => {
           getDownloadURL(imageRef).then(async (url) => {
             await addDoc(docRef, {
-              image:url,
+              image: url,
               name,
               prefecture,
               address,
@@ -137,6 +139,10 @@ const Field = () => {
     setBudgetD(event.target.value as string);
   };
 
+  const handleChangeR = (event: SelectChangeEvent<number>) => {
+    setRate(event.target.value as number);
+  };
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -185,14 +191,19 @@ const Field = () => {
               style={{ display: "none" }}
             />
             <label htmlFor="image">
-              <StyledImgBtn>写真を追加</StyledImgBtn>
+              <StyledImgBtn>
+                写真を追加
+                <AddCircleIcon fontSize="large" />
+              </StyledImgBtn>
             </label>
           </Box>
           <Avatar
-            variant="square"
+            variant="rounded"
             src={image ? URL.createObjectURL(image) : ""}
-            sx={{ width: "50%", height: "auto" }}
-          />
+            sx={{ width: "25%", height: "auto" }}
+          >
+            <AddCircleIcon fontSize="large" />
+          </Avatar>
         </StyledImgBox>
         <StyledBox>
           <StyledTitle>店名</StyledTitle>
@@ -296,6 +307,20 @@ const Field = () => {
               setRate(newValue !== null ? newValue : 0);
             }}
           />
+          <FormControl sx={{ width: "10%", ml: "2%" }}>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={rate}
+              onChange={handleChangeR}
+            >
+              {RateList.map((rate) => (
+                <MenuItem key={rate.code} value={rate.rate}>
+                  {rate.rate}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </StyledBox>
         <Button
           variant="contained"
