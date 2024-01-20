@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Box, Button, Card, Typography, styled } from "@mui/material";
+import { Box, Button, Card, Chip, Typography, styled } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 
 const SerchBox = () => {
@@ -8,6 +8,10 @@ const SerchBox = () => {
 
   const onClick = () => {
     router.push("/post/shop");
+  };
+
+  const handleClick = () => {
+    router.push("/");
   };
 
   return (
@@ -23,7 +27,12 @@ const SerchBox = () => {
           borderRadius: 3,
         }}
       >
-        <Typography>ジャンル</Typography>
+        <Chip label="高い順" variant="outlined" onClick={handleClick} />
+        <Chip label="低い順" variant="outlined" onClick={handleClick} />
+        <Chip label="評価順" variant="outlined" onClick={handleClick} />
+        <Chip label="東京都" variant="outlined" onClick={handleClick} />
+        <Chip label="長崎県" variant="outlined" onClick={handleClick} />
+        <Chip label="大阪府" variant="outlined" onClick={handleClick} />
         <StyledBtn onClick={onClick} variant="contained">
           <CreateIcon />
           投稿する

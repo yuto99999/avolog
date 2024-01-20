@@ -31,7 +31,7 @@ interface Shop {
 }
 
 const DisplayShop = () => {
-  const { documents: shops } = useFirebase("Shop");
+  const { documents: shops } = useFirebase("Shop", "createdAt", "desc");
 
   return (
     <Box p={3} pl={12} pr={12} display="flex">
