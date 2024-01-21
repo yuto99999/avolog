@@ -30,8 +30,8 @@ interface Shop {
   };
 }
 
-const DisplayShop = () => {
-  const { documents: shops } = useFirebase("Shop", "createdAt", "desc");
+const DisplayBudget = () => {
+  const { documents: shops } = useFirebase("Shop", "rate", "desc");
 
   return (
     <Box p={3} pl={12} pr={12} display="flex">
@@ -138,4 +138,4 @@ const StyledImage = styled("img")(({ theme }) => ({
   objectFit: "cover",
 }));
 
-export default DisplayShop;
+export default DisplayBudget;

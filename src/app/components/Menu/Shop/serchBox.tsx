@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { Box, Button, Card, Chip, Typography, styled } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
+import BudgetBtn from "./ConditionBtn/bugetBtn";
 
 const SerchBox = () => {
   const router = useRouter();
@@ -27,12 +28,27 @@ const SerchBox = () => {
           borderRadius: 3,
         }}
       >
-        <Chip label="高い順" variant="outlined" onClick={handleClick} />
-        <Chip label="低い順" variant="outlined" onClick={handleClick} />
-        <Chip label="評価順" variant="outlined" onClick={handleClick} />
-        <Chip label="東京都" variant="outlined" onClick={handleClick} />
-        <Chip label="長崎県" variant="outlined" onClick={handleClick} />
-        <Chip label="大阪府" variant="outlined" onClick={handleClick} />
+        <BudgetBtn />
+        <Box>
+          <Chip label="評価順" variant="outlined" onClick={handleClick} />
+        </Box>
+        <Box display="flex" gap={1}>
+          <Chip label="東京都" variant="outlined" onClick={handleClick} />
+          <Chip label="長崎県" variant="outlined" onClick={handleClick} />
+          <Chip label="大阪府" variant="outlined" onClick={handleClick} />
+        </Box>
+        <Box display="flex" gap={1}>
+          <Chip label="和食" variant="outlined" onClick={handleClick} />
+          <Chip label="洋食" variant="outlined" onClick={handleClick} />
+          <Chip label="メキシカン" variant="outlined" onClick={handleClick} />
+          <Chip label="中華" variant="outlined" onClick={handleClick} />
+          <Chip
+            label="アジア・エスニック"
+            variant="outlined"
+            onClick={handleClick}
+          />
+          <Chip label="その他" variant="outlined" onClick={handleClick} />
+        </Box>
         <StyledBtn onClick={onClick} variant="contained">
           <CreateIcon />
           投稿する
