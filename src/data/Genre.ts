@@ -9,11 +9,11 @@ export const GenreList: Genre[] = [
   },
   {
     code: 2,
-    name: "メキシカン",
+    name: "洋食",
   },
   {
     code: 3,
-    name: "洋食",
+    name: "メキシカン",
   },
   {
     code: 4,
