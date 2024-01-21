@@ -1,6 +1,6 @@
 "use client";
 import { Box } from "@mui/material";
-import DisplayShop from "./displayShop";
+import DisplayShop from "./Display/displayShop";
 import SerchBox from "./serchBox";
 
 const Shop = () => {

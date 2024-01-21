@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import useCondition from "@/lib/useCondition";
 
 interface Shop {
   id: string;
@@ -31,7 +32,7 @@ interface Shop {
 }
 
 const DisplayShop = () => {
-  const { documents: shops } = useFirebase("Shop", "createdAt", "desc");
+  const { documents: shops } = useCondition("Shop", "prefecture", "東京都");
 
   return (
     <Box p={3} pl={12} pr={12} display="flex">
