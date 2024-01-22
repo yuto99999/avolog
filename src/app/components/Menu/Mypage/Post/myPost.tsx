@@ -15,7 +15,7 @@ import DeleteBtn from "../delateBtn";
 import EditBtn from "../editBtn";
 
 interface Mypost {
-  id: any;
+  id: string;
   address: string;
   image: string;
   budgetL: string;
@@ -74,9 +74,9 @@ const MyPost = () => {
                     {myPost.user.name}
                   </Typography>
                 </Box>
-                <Box display="flex" alignItems="center" pr={1}>
+                <Box display="flex" alignItems="center" mr={1}>
                   <EditBtn />
-                  <DeleteBtn id={myPost.id} />
+                  <DeleteBtn docId={myPost.id} />
                 </Box>
               </Box>
               <StyledImage src={myPost.image} />
