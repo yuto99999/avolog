@@ -13,25 +13,27 @@ const useMypost = (data: string) => {
   const [documents, setDocuments] = useState([]);
 
   const { user } = useUser();
-  const uid = user!.uid;
 
   useEffect(() => {
-    const firestore = store;
-    const docRef = collection(firestore, data);
-    const queryRef = query(
-      docRef,
-      where("user.uid", "==", uid),
-      orderBy("createdAt", "desc")
-    );
-    const unsub = onSnapshot(queryRef, (snapshot) => {
-      let results: any = [];
-      snapshot.docs.forEach((doc) => {
-        results.push({ ...doc.data(), id: doc.id });
+    if (user) {
+      const uid = user.uid;
+      const firestore = store;
+      const docRef = collection(firestore, data);
+      const queryRef = query(
+        docRef,
+        where("user.uid", "==", uid),
+        orderBy("createdAt", "desc")
+      );
+      const unsub = onSnapshot(queryRef, (snapshot) => {
+        let results: any = [];
+        snapshot.docs.forEach((doc) => {
+          results.push({ ...doc.data(), id: doc.id });
+        });
+        console.log(results);
+        setDocuments(results);
       });
-      console.log(results);
-      setDocuments(results);
-    });
-    return () => unsub();
+      return () => unsub();
+    }
   }, [data]);
 
   return { documents };
