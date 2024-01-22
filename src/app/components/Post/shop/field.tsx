@@ -1,10 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { store, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import useProfile from "@/lib/useProfile";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import usePost from "@/lib/usePost";
+import {
+  doc,
+  collection,
+  addDoc,
+  Timestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { PrefList } from "@/data/Prefectures";
 import { BudgetList } from "@/data/Budget";
 import { GenreList } from "@/data/Genre";
@@ -54,7 +61,22 @@ const Field = () => {
   const profileData = useProfile();
   const profile = profileData.profile;
 
+  const postData = usePost();
+  const post = postData.post;
+
   const router = useRouter();
+
+  useEffect(() => {
+    if (post && post.name) {
+      setName(post.name);
+      setPrefecture(post.prefecture);
+      setAddress(post.address);
+      setGenre(post.genre);
+      setBudgetL(post.budgetL);
+      setBudgetD(post.budgetD);
+      setRate(post.rate);
+    }
+  }, [post]);
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -69,46 +91,75 @@ const Field = () => {
         const imageRef = ref(firestorage, image.name);
         uploadBytes(imageRef, image).then(() => {
           getDownloadURL(imageRef).then(async (url) => {
-            await addDoc(docRef, {
-              image: url,
-              name,
-              prefecture,
-              address,
-              genre,
-              budgetL,
-              budgetD,
-              rate,
-              createdAt: Timestamp.fromDate(new Date()),
-              user: {
-                name: profile?.name,
-                image: profile?.image,
-                uid: profile?.uid,
-              },
-            });
+            if (post) {
+              const postRef = doc(firestore, "Shop", post?.id);
+              await updateDoc(postRef, {
+                image: url,
+                name,
+                prefecture,
+                address,
+                genre,
+                budgetL,
+                budgetD,
+                rate,
+                createdAt: Timestamp.fromDate(new Date()),
+              });
+            } else {
+              await addDoc(docRef, {
+                image: url,
+                name,
+                prefecture,
+                address,
+                genre,
+                budgetL,
+                budgetD,
+                rate,
+                createdAt: Timestamp.fromDate(new Date()),
+                user: {
+                  name: profile?.name,
+                  image: profile?.image,
+                  uid: profile?.uid,
+                },
+              });
+            }
           });
         });
       } else {
-        await addDoc(docRef, {
-          image: "",
-          name,
-          prefecture,
-          address,
-          genre,
-          budgetL,
-          budgetD,
-          rate,
-          createdAt: Timestamp.fromDate(new Date()),
-          user: {
-            name: profile?.name,
-            image: profile?.image,
-            uid: profile?.uid,
-          },
-        });
+        if (post) {
+          const postRef = doc(firestore, "Shop", post?.id);
+          await updateDoc(postRef, {
+            name,
+            prefecture,
+            address,
+            genre,
+            budgetL,
+            budgetD,
+            rate,
+            createdAt: Timestamp.fromDate(new Date()),
+          });
+        } else {
+          await addDoc(docRef, {
+            image: "",
+            name,
+            prefecture,
+            address,
+            genre,
+            budgetL,
+            budgetD,
+            rate,
+            createdAt: Timestamp.fromDate(new Date()),
+            user: {
+              name: profile?.name,
+              image: profile?.image,
+              uid: profile?.uid,
+            },
+          });
+        }
       }
       setSuccess(true);
       setOpen(true);
       setTimeout(() => {
-        router.push("/menu/shop");
+        router.push("/menu/mypage/");
       }, 1200);
     } catch (e) {
       console.log(e);
@@ -222,6 +273,7 @@ const Field = () => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
+              required
               value={prefecture}
               onChange={handleChangePref}
             >
@@ -250,6 +302,7 @@ const Field = () => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
+              required
               value={genre}
               onChange={handleChangeG}
             >
@@ -269,6 +322,7 @@ const Field = () => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
+                required
                 value={budgetL}
                 onChange={handleChangeBL}
               >
@@ -284,6 +338,7 @@ const Field = () => {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
+                required
                 value={budgetD}
                 onChange={handleChangeBD}
               >
@@ -333,7 +388,7 @@ const Field = () => {
             borderRadius: "5rem",
           }}
         >
-          投稿
+          {post ? "更新" : "投稿"}
         </Button>
       </Box>
       {success && (
@@ -343,7 +398,7 @@ const Field = () => {
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert severity="success" sx={{ width: "100%" }}>
-            投稿しました！
+            {post ? "更新" : "投稿"}しました！
           </Alert>
         </Snackbar>
       )}

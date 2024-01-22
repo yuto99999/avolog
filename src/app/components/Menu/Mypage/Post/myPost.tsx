@@ -1,3 +1,4 @@
+"use client"
 import useMypost from "@/lib/useMypost";
 import { Timestamp } from "firebase/firestore";
 import {
@@ -11,8 +12,8 @@ import {
 } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import DeleteBtn from "../delateBtn";
-import EditBtn from "../editBtn";
+import DeleteBtn from "../Btn/delateBtn";
+import EditBtn from "../Btn/editBtn";
 
 interface Mypost {
   id: string;
