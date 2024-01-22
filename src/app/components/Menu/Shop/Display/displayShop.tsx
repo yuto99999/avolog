@@ -8,9 +8,13 @@ import {
   styled,
   Grid,
   Card,
+  Checkbox,
 } from "@mui/material";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import { Favorite, FavoriteBorder } from "@mui/icons-material";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 interface Shop {
   id: string;
@@ -29,6 +33,8 @@ interface Shop {
     image: string;
   };
 }
+
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const DisplayShop = () => {
   const { documents: shops } = useFirebase("Shop", "createdAt", "desc");
@@ -107,7 +113,7 @@ const DisplayShop = () => {
                   </Typography>
                 </Box>
               </Box>
-              <Box pb={1.2} pl={1.5} display="flex" alignItems="center">
+              <Box pt={0.5} pl={1.5} display="flex" alignItems="center">
                 <Rating
                   name="half-rating-read"
                   defaultValue={shop.rate}
@@ -122,6 +128,18 @@ const DisplayShop = () => {
                 >
                   {shop.rate}
                 </Typography>
+              </Box>
+              <Box pb={1.2} pl={0.8}>
+                <Checkbox
+                  {...label}
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                />
+                <Checkbox
+                  {...label}
+                  icon={<BookmarkBorderIcon />}
+                  checkedIcon={<BookmarkIcon />}
+                />
               </Box>
             </Card>
           </Grid>
