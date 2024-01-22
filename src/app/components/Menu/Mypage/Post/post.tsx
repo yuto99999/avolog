@@ -1,9 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import MyPost from "./myPost";
 
 const Post = () => {
   return (
-    <Box width="100%" minHeight="100vh" sx={{ backgroundColor: "#F8F9F9" }}>
-      <Typography>レシピ</Typography>
+    <Box width="100%" minHeight="100vh">
+      <MyPost />
     </Box>
   );
 };

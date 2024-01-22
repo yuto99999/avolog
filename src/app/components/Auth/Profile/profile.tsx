@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
@@ -24,6 +24,12 @@ const Profile = () => {
   const profileData = useProfile();
   const profile = profileData.profile;
 
+  useEffect(() => {
+    if (profile && profile.name) {
+      setName(profile.name);
+    }
+  }, [profile]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -35,6 +41,7 @@ const Profile = () => {
         uploadBytes(imageRef, image).then(() => {
           getDownloadURL(imageRef).then(async (url) => {
             if (profile) {
+              setName(profile.name);
               const userRef = doc(firestore, "Users", profile?.id);
               await updateDoc(userRef, {
                 name,
@@ -158,6 +165,7 @@ const Profile = () => {
               autoComplete="name"
               autoFocus
               onChange={(e) => setName(e.target.value)}
+              value={name}
               sx={{ width: "100%", m: 1.5 }}
             />
             <Button
