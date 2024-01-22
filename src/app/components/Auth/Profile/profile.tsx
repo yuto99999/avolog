@@ -41,7 +41,6 @@ const Profile = () => {
         uploadBytes(imageRef, image).then(() => {
           getDownloadURL(imageRef).then(async (url) => {
             if (profile) {
-              setName(profile.name);
               const userRef = doc(firestore, "Users", profile?.id);
               await updateDoc(userRef, {
                 name,
