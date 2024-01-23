@@ -38,9 +38,8 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         setSuccess(true);
-        setError(false);
+        console.log("ログインしました");
         console.log(user);
-        console.log("ログイン成功！");
         setOpen(true);
         setTimeout(() => {
           router.push("/");
