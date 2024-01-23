@@ -102,8 +102,8 @@ const AccountMenu = () => {
 };
 
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  width: 65,
-  height: 65,
+  width: 55,
+  height: 55,
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
