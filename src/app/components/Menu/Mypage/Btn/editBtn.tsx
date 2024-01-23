@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { Box, Button } from "@mui/material";
-import { routeModule } from "next/dist/build/templates/app-page";
 
 const EditBtn = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/post/shop")
+    router.push("/post/shop");
   };
 
   return (
