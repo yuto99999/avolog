@@ -7,14 +7,27 @@ import useUser from "@/lib/useUser";
 import useProfile from "@/lib/useProfile";
 import { store, storage } from "@/lib/firebase";
 import { Typography, Box, TextField, Button, Avatar } from "@mui/material";
+import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Profile = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState<File | null>();
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const router = useRouter();
+
+  const vertical = "top";
+  const horizontal = "right";
 
   const firestorage = storage;
   const firestore = store;
@@ -64,12 +77,15 @@ const Profile = () => {
         }
       }
       setSuccess(true);
-      setError(false);
-      console.log("プロフィール設定成功!");
-      router.push("/");
+      console.log("プロフィール設定が完了しました");
+      setOpen(true);
+      setTimeout(() => {
+        router.push("/");
+      }, 1200);
     } catch (err) {
       console.log(err);
       setError(true);
+      setOpen(true);
     }
   };
 
@@ -77,6 +93,17 @@ const Profile = () => {
     if (e.target.files !== null) {
       setImage(e.target.files[0]);
     }
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -185,6 +212,29 @@ const Profile = () => {
           </Box>
         </Box>
       </Box>
+      {success && (
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="success" sx={{ width: "100%" }}>
+            プロフィールを{profile ? "更新" : "作成"}しました
+          </Alert>
+        </Snackbar>
+      )}
+      {error && (
+        <Snackbar
+          open={open}
+          onClose={handleClose}
+          autoHideDuration={6000}
+          anchorOrigin={{ vertical, horizontal }}
+        >
+          <Alert severity="error" onClose={handleClose} sx={{ width: "100%" }}>
+            プロフィールを{profile ? "更新" : "作成"}できませんでした
+          </Alert>
+        </Snackbar>
+      )}
     </Box>
   );
 };
