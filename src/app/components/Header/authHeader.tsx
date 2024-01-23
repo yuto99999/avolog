@@ -24,8 +24,8 @@ const StyledHeader = styled(Box)(({ theme }) => ({
 }));
 
 const StyledAvater = styled(Avatar)(({ theme }) => ({
-  width: 75,
-  height: 75,
+  width: 65,
+  height: 65,
   marginRight: 10,
 }));
 
@@ -34,7 +34,7 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
   color: "#000000",
   fontFamily: "游ゴシック",
   fontWeight: "bold",
-  fontSize: "1.9rem",
+  fontSize: "1.7rem",
   letterSpacing: 1,
 }));
 
