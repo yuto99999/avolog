@@ -15,7 +15,7 @@ const Header = () => {
           <StyledLink href={"/menu/mypage"}>マイページ</StyledLink>
         </Box>
         <Box display="flex" alignItems="center" gap={3} mr={5}>
-          <StyledLink href={"/auth/register"}>サイトについて</StyledLink>
+          <StyledLink href={"/about"}>サイトについて</StyledLink>
           <StyledLink href={"/auth/register"}>会員登録</StyledLink>
           <StyledLink href={"/auth/login"}>ログイン</StyledLink>
           <AccountMenu />
