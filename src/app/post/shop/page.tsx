@@ -1,9 +1,9 @@
-import Post from "@/app/components/Post/shop/post";
+import CreateField from "@/app/components/Menu/Shop/createField";
 
 export default function Home() {
   return (
     <>
-      <Post />
+      <CreateField />
     </>
   );
 }
