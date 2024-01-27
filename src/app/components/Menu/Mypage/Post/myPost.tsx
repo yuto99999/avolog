@@ -76,7 +76,7 @@ const MyPost = () => {
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" mr={1}>
-                  <EditBtn />
+                  <EditBtn docId={myPost.id}/>
                   <DeleteBtn docId={myPost.id} />
                 </Box>
               </Box>

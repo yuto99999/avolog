@@ -11,7 +11,7 @@ const SerchBox = () => {
   const router = useRouter();
 
   const onClick = () => {
-    router.push("/post/shop");
+    router.push("/post/create");
   };
 
   return (

@@ -1,21 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { store, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import useProfile from "@/lib/useProfile";
-import {
-  doc,
-  collection,
-  addDoc,
-  Timestamp,
-  updateDoc,
-  getDoc,
-} from "firebase/firestore";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { PrefList } from "@/data/Prefectures";
 import { BudgetList } from "@/data/Budget";
 import { GenreList } from "@/data/Genre";
-import { RateList } from "@/data/RateList";
 import {
   Box,
   TextField,
@@ -34,6 +26,7 @@ import Snackbar from "@mui/material/Snackbar";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { RateList } from "@/data/RateList";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -42,7 +35,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const Field = ({ docId }: { docId: string }) => {
+const CreateField = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,7 +47,6 @@ const Field = ({ docId }: { docId: string }) => {
   const [budgetL, setBudgetL] = useState("");
   const [budgetD, setBudgetD] = useState("");
   const [rate, setRate] = useState(0);
-  const firestore = store;
 
   const vertical = "top";
   const horizontal = "right";
@@ -64,25 +56,7 @@ const Field = ({ docId }: { docId: string }) => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (docId) {
-      const postRef = doc(firestore, "Shop", docId);
-      getDoc(postRef).then((docSnap) => {
-        if (docSnap.exists()) {
-          const postData = docSnap.data();
-          setName(postData.name);
-          setPrefecture(postData.prefecture);
-          setAddress(postData.address);
-          setGenre(postData.genre);
-          setBudgetL(postData.budgetL);
-          setBudgetD(postData.budgetD);
-          setRate(postData.rate);
-        }
-      });
-    }
-  }, [docId]);
-
-  const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     const firestore = store;
@@ -95,76 +69,46 @@ const Field = ({ docId }: { docId: string }) => {
         const imageRef = ref(firestorage, image.name);
         uploadBytes(imageRef, image).then(() => {
           getDownloadURL(imageRef).then(async (url) => {
-            if (docId) {
-              const postRef = doc(firestore, "Shop", docId);
-              await updateDoc(postRef, {
-                image: url,
-                name,
-                prefecture,
-                address,
-                genre,
-                budgetL,
-                budgetD,
-                rate,
-                createdAt: Timestamp.fromDate(new Date()),
-              });
-            } else {
-              await addDoc(docRef, {
-                image: url,
-                name,
-                prefecture,
-                address,
-                genre,
-                budgetL,
-                budgetD,
-                rate,
-                createdAt: Timestamp.fromDate(new Date()),
-                user: {
-                  name: profile?.name,
-                  image: profile?.image,
-                  uid: profile?.uid,
-                },
-              });
-            }
+            await addDoc(docRef, {
+              image: url,
+              name,
+              prefecture,
+              address,
+              genre,
+              budgetL,
+              budgetD,
+              rate,
+              createdAt: Timestamp.fromDate(new Date()),
+              user: {
+                name: profile?.name,
+                image: profile?.image,
+                uid: profile?.uid,
+              },
+            });
           });
         });
       } else {
-        if (docId) {
-          const postRef = doc(firestore, "Shop", docId);
-          await updateDoc(postRef, {
-            name,
-            prefecture,
-            address,
-            genre,
-            budgetL,
-            budgetD,
-            rate,
-            createdAt: Timestamp.fromDate(new Date()),
-          });
-        } else {
-          await addDoc(docRef, {
-            image: "",
-            name,
-            prefecture,
-            address,
-            genre,
-            budgetL,
-            budgetD,
-            rate,
-            createdAt: Timestamp.fromDate(new Date()),
-            user: {
-              name: profile?.name,
-              image: profile?.image,
-              uid: profile?.uid,
-            },
-          });
-        }
+        await addDoc(docRef, {
+          image: "",
+          name,
+          prefecture,
+          address,
+          genre,
+          budgetL,
+          budgetD,
+          rate,
+          createdAt: Timestamp.fromDate(new Date()),
+          user: {
+            name: profile?.name,
+            image: profile?.image,
+            uid: profile?.uid,
+          },
+        });
       }
-      console.log(docId);
       setSuccess(true);
       setOpen(true);
       setTimeout(() => {
-        router.push("/menu/mypage/");
+        router.push("/");
       }, 1200);
     } catch (e) {
       console.log(e);
@@ -393,7 +337,7 @@ const Field = ({ docId }: { docId: string }) => {
             borderRadius: "5rem",
           }}
         >
-          更新
+          投稿
         </Button>
       </Box>
       {success && (
@@ -403,7 +347,7 @@ const Field = ({ docId }: { docId: string }) => {
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert severity="success" sx={{ width: "100%" }}>
-            更新しました！
+            投稿しました！
           </Alert>
         </Snackbar>
       )}
@@ -415,7 +359,7 @@ const Field = ({ docId }: { docId: string }) => {
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert severity="error" onClose={handleClose} sx={{ width: "100%" }}>
-            更新に失敗しました
+            投稿に失敗しました
           </Alert>
         </Snackbar>
       )}
@@ -462,4 +406,4 @@ const StyledImgBox = styled(Box)(({ theme }) => ({
   marginBottom: "2rem",
 }));
 
-export default Field;
+export default CreateField;

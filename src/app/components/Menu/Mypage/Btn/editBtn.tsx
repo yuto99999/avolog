@@ -1,19 +1,16 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Box, Button } from "@mui/material";
+import Link from "next/link";
 
-const EditBtn = () => {
+const EditBtn = ({ docId }: { docId: string }) => {
   const router = useRouter();
-
-  const handleClick = () => {
-    router.push("/post/shop");
-  };
 
   return (
     <Box>
-      <Button onClick={handleClick} sx={{ color: "#000000" }}>
-        編集
-      </Button>
+      <Link href={`/post/${docId}`}>
+        <Button sx={{ color: "#000000" }}>編集</Button>
+      </Link>
     </Box>
   );
 };
