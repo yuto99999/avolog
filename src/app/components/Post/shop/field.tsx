@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import { store, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import useProfile from "@/lib/useProfile";
-import usePost from "@/lib/usePost";
 import {
   doc,
   collection,
   addDoc,
   Timestamp,
   updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { PrefList } from "@/data/Prefectures";
 import { BudgetList } from "@/data/Budget";
@@ -42,7 +42,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const Field = () => {
+const Field = ({ docId }: { docId: string }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
@@ -54,6 +54,7 @@ const Field = () => {
   const [budgetL, setBudgetL] = useState("");
   const [budgetD, setBudgetD] = useState("");
   const [rate, setRate] = useState(0);
+  const firestore = store;
 
   const vertical = "top";
   const horizontal = "right";
@@ -61,22 +62,25 @@ const Field = () => {
   const profileData = useProfile();
   const profile = profileData.profile;
 
-  const postData = usePost();
-  const post = postData.post;
-
   const router = useRouter();
 
   useEffect(() => {
-    if (post && post.name) {
-      setName(post.name);
-      setPrefecture(post.prefecture);
-      setAddress(post.address);
-      setGenre(post.genre);
-      setBudgetL(post.budgetL);
-      setBudgetD(post.budgetD);
-      setRate(post.rate);
+    if (docId) {
+      const postRef = doc(firestore, "Shop", docId);
+      getDoc(postRef).then((docSnap) => {
+        if (docSnap.exists()) {
+          const postData = docSnap.data();
+          setName(postData.name);
+          setPrefecture(postData.prefecture);
+          setAddress(postData.address);
+          setGenre(postData.genre);
+          setBudgetL(postData.budgetL);
+          setBudgetD(postData.budgetD);
+          setRate(postData.rate);
+        }
+      });
     }
-  }, [post]);
+  }, [docId]);
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -91,8 +95,8 @@ const Field = () => {
         const imageRef = ref(firestorage, image.name);
         uploadBytes(imageRef, image).then(() => {
           getDownloadURL(imageRef).then(async (url) => {
-            if (post) {
-              const postRef = doc(firestore, "Shop", post?.id);
+            if (docId) {
+              const postRef = doc(firestore, "Shop", docId);
               await updateDoc(postRef, {
                 image: url,
                 name,
@@ -125,8 +129,8 @@ const Field = () => {
           });
         });
       } else {
-        if (post) {
-          const postRef = doc(firestore, "Shop", post?.id);
+        if (docId) {
+          const postRef = doc(firestore, "Shop", docId);
           await updateDoc(postRef, {
             name,
             prefecture,
@@ -156,6 +160,7 @@ const Field = () => {
           });
         }
       }
+      console.log(docId);
       setSuccess(true);
       setOpen(true);
       setTimeout(() => {
@@ -388,7 +393,7 @@ const Field = () => {
             borderRadius: "5rem",
           }}
         >
-          {post ? "更新" : "投稿"}
+          更新
         </Button>
       </Box>
       {success && (
@@ -398,7 +403,7 @@ const Field = () => {
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert severity="success" sx={{ width: "100%" }}>
-            {post ? "更新" : "投稿"}しました！
+            更新しました！
           </Alert>
         </Snackbar>
       )}
@@ -410,7 +415,7 @@ const Field = () => {
           anchorOrigin={{ vertical, horizontal }}
         >
           <Alert severity="error" onClose={handleClose} sx={{ width: "100%" }}>
-            投稿に失敗しました
+            更新に失敗しました
           </Alert>
         </Snackbar>
       )}
