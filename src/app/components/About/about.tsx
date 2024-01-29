@@ -1,10 +1,12 @@
-import { Box, Typography } from "@mui/material";
+import Content from "./content";
+import Scroll from "./scroll";
 
 const About = () => {
   return (
-    <Box width="100%" minHeight="100vh" pt="7.5rem">
-      <Typography>このサイトについて</Typography>
-    </Box>
+    <>
+      <Scroll />
+      <Content />
+    </>
   );
 };
 
