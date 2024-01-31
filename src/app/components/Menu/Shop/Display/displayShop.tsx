@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 import useFirebase from "@/lib/useFirebase";
+import DetailBtn from "../ConditionBtn/detailBtn";
 import {
   Box,
   Typography,
@@ -15,6 +16,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import PlaceIcon from "@mui/icons-material/Place";
 
 interface Shop {
   id: string;
@@ -80,15 +82,17 @@ const DisplayShop = () => {
               >
                 {shop.name}
               </Typography>
-              <Typography
-                pt={1}
-                pl={1.8}
-                fontFamily="游ゴシック"
-                fontWeight="bold"
-                fontSize="0.9rem"
-              >
-                {shop.address}
-              </Typography>
+              <Box display="flex" alignItems="center" pt={1} pl={1.6}>
+                <PlaceIcon fontSize="small" />
+                <Typography
+                  pl={0.5}
+                  fontFamily="游ゴシック"
+                  fontWeight="bold"
+                  fontSize="0.9rem"
+                >
+                  {shop.address}
+                </Typography>
+              </Box>
               <Box display="flex" pl={1} pt={0.3}>
                 <Box p={0.7} display="flex" alignItems="center">
                   <LightModeIcon fontSize="small" />
@@ -129,17 +133,26 @@ const DisplayShop = () => {
                   {shop.rate}
                 </Typography>
               </Box>
-              <Box pb={1.2} pl={0.8}>
-                <Checkbox
-                  {...label}
-                  icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite />}
-                />
-                <Checkbox
-                  {...label}
-                  icon={<BookmarkBorderIcon />}
-                  checkedIcon={<BookmarkIcon />}
-                />
+              <Box
+                pb={1.2}
+                pl={0.8}
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Box>
+                  <Checkbox
+                    {...label}
+                    icon={<FavoriteBorder />}
+                    checkedIcon={<Favorite />}
+                  />
+                  <Checkbox
+                    {...label}
+                    icon={<BookmarkBorderIcon />}
+                    checkedIcon={<BookmarkIcon />}
+                  />
+                </Box>
+                <DetailBtn docId={shop.id} />
               </Box>
             </Card>
           </Grid>
