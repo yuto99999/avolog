@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import useMypost from "@/lib/useMypost";
 import { Timestamp } from "firebase/firestore";
 import {
@@ -76,7 +76,7 @@ const MyPost = () => {
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" mr={1}>
-                  <EditBtn docId={myPost.id}/>
+                  <EditBtn docId={myPost.id} />
                   <DeleteBtn docId={myPost.id} />
                 </Box>
               </Box>
