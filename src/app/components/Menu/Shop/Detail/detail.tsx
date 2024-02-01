@@ -4,6 +4,7 @@ import { Box, Rating, Tab, Tabs, Typography, styled } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
 import useDetail from "@/lib/useDetail";
 import Top from "./top";
+import Map from "./map";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 
 interface Detail {
@@ -118,7 +119,7 @@ const Detail = ({ docId }: { docId: string }) => {
               口コミ
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              地図
+              <Map docId={detail.id}/>
             </CustomTabPanel>
           </Box>
         </Box>
