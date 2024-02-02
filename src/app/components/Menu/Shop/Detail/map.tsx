@@ -1,34 +1,39 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import useDetail from "@/lib/useDetail";
-import { Box } from "@mui/material";
 
-const MapComponent = ({ docId }: { docId: string }) => {
-  const { documents: detail } = useDetail("Shop", docId);
+const MapComponent = ({ address }: { address: string }) => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
-  const [location, setLocation] = useState({ lat: 0, lng: 0 });
+
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
+
+  const center = {
+    lat: lat,
+    lng: lng,
+  };
+
+  function geocode() {
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address: address }, (results, status) => {
+      if (status === "OK" && results) {
+        setLat(results[0].geometry.location.lat()),
+          setLng(results[0].geometry.location.lng());
+      }
+    });
+  }
 
   useEffect(() => {
-    if (detail.length > 0 && window.google) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address: detail[0].address }, (results, status) => {
-        if (status === "OK" && results) {
-          setLocation({
-            lat: results[0].geometry.location.lat(),
-            lng: results[0].geometry.location.lng(),
-          });
-        } else {
-          console.error("Geocode was not successful for the following reason: " + status);
-        }
-      });
+    if (window.google) {
+      geocode();
     }
-  }, [detail]);
+  }, [address]);
 
   return (
-    <LoadScript googleMapsApiKey={apiKey}>
+    <LoadScript googleMapsApiKey={"AIzaSyA7iKYZvXllu1uShfNlugKDoJPqzxH0BYs"}>
       <GoogleMap
-        mapContainerStyle={{ width: "400px", height: "400px" }}
-        center={location}
+        mapContainerStyle={{ width: "100%", height: "50vh" }}
+        center={center}
         zoom={15}
       />
     </LoadScript>

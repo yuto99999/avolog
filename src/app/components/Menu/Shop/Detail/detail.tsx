@@ -9,6 +9,7 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 
 interface Detail {
   id: string;
+  address: string;
   name: string;
   rate: number;
   genre: string;
@@ -119,7 +120,7 @@ const Detail = ({ docId }: { docId: string }) => {
               口コミ
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-              <Map docId={detail.id}/>
+              <Map address={detail.address} />
             </CustomTabPanel>
           </Box>
         </Box>
