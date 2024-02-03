@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import React, { useState } from "react";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const Map = ({ address }: { address: string }) => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
@@ -32,7 +32,9 @@ const Map = ({ address }: { address: string }) => {
           mapContainerStyle={{ width: "100%", height: "50vh" }}
           center={center}
           zoom={15}
-        />
+        >
+          <Marker position={center} />
+        </GoogleMap>
       </LoadScript>
     </>
   );
