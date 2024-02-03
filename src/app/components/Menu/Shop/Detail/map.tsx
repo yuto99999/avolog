@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
-import useDetail from "@/lib/useDetail";
 
-const MapComponent = ({ address }: { address: string }) => {
+const Map = ({ address }: { address: string }) => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
 
   const [lat, setLat] = useState(0);
@@ -13,31 +12,30 @@ const MapComponent = ({ address }: { address: string }) => {
     lng: lng,
   };
 
-  function geocode() {
+  async function geocode() {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ address: address }, (results, status) => {
       if (status === "OK" && results) {
-        setLat(results[0].geometry.location.lat()),
-          setLng(results[0].geometry.location.lng());
+        setLat(results[0].geometry.location.lat());
+        setLng(results[0].geometry.location.lng());
       }
     });
   }
 
-  useEffect(() => {
-    if (window.google) {
-      geocode();
-    }
-  }, [address]);
-
   return (
-    <LoadScript googleMapsApiKey={"AIzaSyA7iKYZvXllu1uShfNlugKDoJPqzxH0BYs"}>
-      <GoogleMap
-        mapContainerStyle={{ width: "100%", height: "50vh" }}
-        center={center}
-        zoom={15}
-      />
-    </LoadScript>
+    <>
+      <LoadScript
+        googleMapsApiKey={"AIzaSyA7iKYZvXllu1uShfNlugKDoJPqzxH0BYs"}
+        onLoad={() => geocode()}
+      >
+        <GoogleMap
+          mapContainerStyle={{ width: "100%", height: "50vh" }}
+          center={center}
+          zoom={15}
+        />
+      </LoadScript>
+    </>
   );
 };
 
-export default MapComponent;
+export default Map;
