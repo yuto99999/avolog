@@ -10,11 +10,11 @@ import {
   MenuItem,
   styled,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import Logout from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
-
 
 const AccountMenu = () => {
   const profileData = useProfile();
@@ -78,6 +78,15 @@ const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
+        <Box display="flex" alignItems="center" justifyContent="center" p={1.5}>
+          <Typography
+            fontFamily="游ゴシック"
+            fontWeight="bold"
+            letterSpacing={1}
+          >
+            {profile ? profile.name : ""}さん
+          </Typography>
+        </Box>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <PersonIcon fontSize="small" />
