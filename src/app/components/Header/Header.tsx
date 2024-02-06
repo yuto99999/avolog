@@ -10,7 +10,7 @@ const Header = () => {
           <StyledLink href={"/"}>
             <Title>AvoLog</Title>
           </StyledLink>
-          <StyledLink href={"/menu/shop"}>お店</StyledLink>
+          <StyledLink href={"/menu/shop"}>Shop</StyledLink>
           <StyledLink href={"/menu/recipe"}>レシピ</StyledLink>
           <StyledLink href={"/menu/mypage"}>マイページ</StyledLink>
         </Box>
