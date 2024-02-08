@@ -1,8 +1,10 @@
 import * as React from "react";
 import useProfile from "@/lib/useProfile";
+import useUser from "@/lib/useUser";
 import {
   Avatar,
   Box,
+  Divider,
   IconButton,
   Link,
   ListItemIcon,
@@ -19,6 +21,8 @@ import EmailIcon from "@mui/icons-material/Email";
 const AccountMenu = () => {
   const profileData = useProfile();
   const profile = profileData.profile;
+
+  const user = useUser();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -56,8 +60,8 @@ const AccountMenu = () => {
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
             "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
+              width: 50,
+              height: 50,
               ml: 1,
               mr: 1,
             },
@@ -78,15 +82,26 @@ const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <Box display="flex" alignItems="center" justifyContent="center" p={1.5}>
+        <MenuItem
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            p: 1.5,
+          }}
+        >
+          <Avatar src={profile ? profile.image : ""} alt="アイコン" />
           <Typography
             fontFamily="游ゴシック"
             fontWeight="bold"
             letterSpacing={1}
+            mt={1}
           >
             {profile ? profile.name : ""}さん
           </Typography>
-        </Box>
+        </MenuItem>
+        <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <PersonIcon fontSize="small" />
