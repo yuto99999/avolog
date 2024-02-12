@@ -17,12 +17,13 @@ import {
 import Logout from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
+import { userInfo } from "os";
 
 const AccountMenu = () => {
   const profileData = useProfile();
   const profile = profileData.profile;
 
-  const user = useUser();
+  const { user } = useUser();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -96,9 +97,17 @@ const AccountMenu = () => {
             fontFamily="游ゴシック"
             fontWeight="bold"
             letterSpacing={1}
-            mt={1}
+            mt={1.5}
           >
             {profile ? profile.name : ""}さん
+          </Typography>
+          <Typography
+            fontFamily="游ゴシック"
+            letterSpacing={1}
+            mt={1.5}
+            px={2.5}
+          >
+            {user ? user.email : ""}
           </Typography>
         </MenuItem>
         <Divider />
