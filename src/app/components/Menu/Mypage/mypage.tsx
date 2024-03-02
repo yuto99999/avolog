@@ -1,8 +1,10 @@
 "use client";
 import * as React from "react";
-import { Box, Typography, Tab, Tabs } from "@mui/material";
-import Save from "./Save/save";
+import { Box, Typography, Tab, Tabs, Avatar, styled } from "@mui/material";
 import Post from "./Post/post";
+import MyRecipe from "./Recipe/myRecipe";
+import useProfile from "@/lib/useProfile";
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -29,16 +31,31 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-
-export default function Mypage() {
+const Mypage = () => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
+  const profileData = useProfile();
+  const profile = profileData.profile;
+
   return (
     <Box width="100%" mt="12vh" pt="1rem">
+      <Box px={10} py={5} display="flex" alignItems="center">
+        <StyledAvatar src={profile ? profile.image : ""} alt="アイコン" />
+        <Typography
+          fontFamily="游ゴシック"
+          fontWeight="bold"
+          fontSize="4.5rem"
+          letterSpacing={1}
+          ml={5}
+        >
+          {profile ? profile.name : ""}
+        </Typography>
+      </Box>
+
       <Box
         display="flex"
         justifyContent="center"
@@ -49,16 +66,23 @@ export default function Mypage() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="保存" />
-          <Tab label="投稿" />
+          <Tab label="お店の投稿" />
+          <Tab label="レシピの投稿" />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <Save />
+        <Post />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Post />
+        <MyRecipe />
       </CustomTabPanel>
     </Box>
   );
-}
+};
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  width: 150,
+  height: 150,
+}));
+
+export default Mypage;
