@@ -13,6 +13,9 @@ interface Detail {
   prefecture: string;
   rate: number;
   createdAt: Timestamp;
+  item: string;
+  make: string;
+  intro: string;
   user: {
     name: string;
     uid: string;
@@ -26,7 +29,7 @@ const useDetail = (data: string, docId: string) => {
   useEffect(() => {
     const firestore = store;
     const docRef = doc(firestore, data, docId);
-    
+
     const unsub = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
         setDocuments([{ ...docSnap.data(), id: docSnap.id } as Detail]);
