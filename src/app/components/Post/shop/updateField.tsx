@@ -42,7 +42,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const updateField = ({ docId }: { docId: string }) => {
+const UpdateField = ({ docId }: { docId: string }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [open, setOpen] = useState(false);
@@ -425,4 +425,4 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
   },
 }));
 
-export default updateField;
+export default UpdateField;
