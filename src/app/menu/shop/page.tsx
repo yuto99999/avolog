@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import DisplayShop from "@/app/components/Menu/Shop/Display/displayShop";
-import SerchBox from "@/app/components/Menu/Shop/serchBox";
+import SerchBox from "@/app/components/Menu/Shop/Display/serchBox";
 import { Box } from "@mui/material";
 
 export default function Home() {
