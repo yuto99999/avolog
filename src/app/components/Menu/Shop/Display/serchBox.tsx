@@ -2,10 +2,10 @@
 import { useRouter } from "next/navigation";
 import { Box, Button, Card, styled } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
-import BudgetBtn from "./ConditionBtn/bugetBtn";
-import RateBtn from "./ConditionBtn/rateBtn";
-import GenreBtn from "./ConditionBtn/genreBtn";
-import PrefBtn from "./ConditionBtn/prefBtn";
+import BudgetBtn from "../ConditionBtn/bugetBtn";
+import RateBtn from "../ConditionBtn/rateBtn";
+import GenreBtn from "../ConditionBtn/genreBtn";
+import PrefBtn from "../ConditionBtn/prefBtn";
 
 const SerchBox = () => {
   const router = useRouter();
