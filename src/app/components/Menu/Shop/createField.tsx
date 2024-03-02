@@ -47,8 +47,6 @@ const CreateField = () => {
   const [budgetL, setBudgetL] = useState("");
   const [budgetD, setBudgetD] = useState("");
   const [rate, setRate] = useState(0);
-  // const [sta, setSta] = useState("");
-  // const [number, setNumber] = useState("");
 
   const vertical = "top";
   const horizontal = "right";
