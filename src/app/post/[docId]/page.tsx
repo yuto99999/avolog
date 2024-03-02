@@ -1,9 +1,9 @@
-import Field from "@/app/components/Post/shop/field";
+import UpdateField from "@/app/components/Post/shop/updateField";
 
 export default function Home({ params }: { params: { docId: string } }) {
   return (
     <>
-      <Field docId={params.docId} />
+      <UpdateField docId={params.docId} />
     </>
   );
 }

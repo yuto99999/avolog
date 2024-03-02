@@ -155,77 +155,41 @@ const CreateField = () => {
   };
 
   return (
-    <Box
-      width="100%"
-      component="form"
-      onSubmit={handleSubmit}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      sx={{
-        backgroundImage: "url(../img/AvoLogo1.png)",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "100%",
-      }}
-    >
-      <Box
-        width="60%"
-        bgcolor="#ffffff"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        mt={15}
-        mb={15}
-        pt={6}
-        pb={6}
-        sx={{ opacity: 0.95, borderRadius: 5 }}
-      >
-        <StyledImgBox>
-          <Box width="30%" pl="10%">
-            <input
+    <Container component="form" onSubmit={handleSubmit}>
+      <StyledBox>
+        <ItemBox>
+          <Title>写真</Title>
+          <Box width={{ xs: "75%", sm: "50%" }}>
+            <Box
+              component="input"
               id="image"
               type="file"
               accept="image/*"
               onChange={handleChangeImg}
-              style={{ display: "none" }}
+              display="none"
             />
-            <label htmlFor="image">
-              <StyledImgBtn>
-                写真を追加
+            <Box component="label" htmlFor="image">
+              <StyledAvatar
+                variant="rounded"
+                src={image ? URL.createObjectURL(image) : ""}
+              >
                 <AddCircleIcon fontSize="large" />
-              </StyledImgBtn>
-            </label>
+              </StyledAvatar>
+            </Box>
           </Box>
-          <Avatar
-            variant="rounded"
-            src={image ? URL.createObjectURL(image) : ""}
-            sx={{ width: "25%", height: "auto" }}
-          >
-            <AddCircleIcon fontSize="large" />
-          </Avatar>
-        </StyledImgBox>
-        <StyledBox>
-          <StyledTitle>店名</StyledTitle>
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
+        </ItemBox>
+        <ItemBox>
+          <Title>店名</Title>
+          <ItemField
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            sx={{ width: "50%" }}
           />
-        </StyledBox>
-        <StyledBox>
-          <StyledTitle>都道府県</StyledTitle>
+        </ItemBox>
+        <ItemBox>
+          <Title>都道府県</Title>
           <FormControl sx={{ width: "50%" }}>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              required
-              value={prefecture}
-              onChange={handleChangePref}
-            >
+            <Select required value={prefecture} onChange={handleChangePref}>
               {PrefList.map((prefecture) => (
                 <MenuItem key={prefecture.prefCode} value={prefecture.prefName}>
                   {prefecture.prefName}
@@ -233,28 +197,19 @@ const CreateField = () => {
               ))}
             </Select>
           </FormControl>
-        </StyledBox>
-        <StyledBox>
-          <StyledTitle>住所</StyledTitle>
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
+        </ItemBox>
+        <ItemBox>
+          <Title>住所</Title>
+          <ItemField
             required
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            sx={{ width: "50%" }}
           />
-        </StyledBox>
-        <StyledBox>
-          <StyledTitle>ジャンル</StyledTitle>
+        </ItemBox>
+        <ItemBox>
+          <Title>ジャンル</Title>
           <FormControl sx={{ width: "50%" }}>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              required
-              value={genre}
-              onChange={handleChangeG}
-            >
+            <Select required value={genre} onChange={handleChangeG}>
               {GenreList.map((genre) => (
                 <MenuItem key={genre.code} value={genre.name}>
                   {genre.name}
@@ -262,19 +217,13 @@ const CreateField = () => {
               ))}
             </Select>
           </FormControl>
-        </StyledBox>
-        <StyledBox>
-          <StyledTitle>予算</StyledTitle>
+        </ItemBox>
+        <ItemBox>
+          <Title>予算</Title>
           <Box width="50%" display="flex" alignItems="center">
             <LightModeIcon fontSize="large" />
             <FormControl sx={{ width: "40%", ml: "2%", mr: "2%" }}>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                required
-                value={budgetL}
-                onChange={handleChangeBL}
-              >
+              <Select required value={budgetL} onChange={handleChangeBL}>
                 {BudgetList.map((budget) => (
                   <MenuItem key={budget.code} value={budget.price}>
                     {budget.price}
@@ -284,13 +233,7 @@ const CreateField = () => {
             </FormControl>
             <BedtimeIcon fontSize="large" />
             <FormControl sx={{ width: "40%", ml: "2%" }}>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                required
-                value={budgetD}
-                onChange={handleChangeBD}
-              >
+              <Select required value={budgetD} onChange={handleChangeBD}>
                 {BudgetList.map((budget) => (
                   <MenuItem key={budget.code} value={budget.price}>
                     {budget.price}
@@ -299,9 +242,9 @@ const CreateField = () => {
               </Select>
             </FormControl>
           </Box>
-        </StyledBox>
-        <StyledBox>
-          <StyledTitle>評価</StyledTitle>
+        </ItemBox>
+        <ItemBox>
+          <Title>評価</Title>
           <Rating
             defaultValue={3}
             precision={0.1}
@@ -312,12 +255,7 @@ const CreateField = () => {
             }}
           />
           <FormControl sx={{ width: "10%", ml: "2%" }}>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={rate}
-              onChange={handleChangeR}
-            >
+            <Select value={rate} onChange={handleChangeR}>
               {RateList.map((rate) => (
                 <MenuItem key={rate.code} value={rate.rate}>
                   {rate.rate}
@@ -325,21 +263,11 @@ const CreateField = () => {
               ))}
             </Select>
           </FormControl>
-        </StyledBox>
-        <Button
-          variant="contained"
-          type="submit"
-          sx={{
-            width: "50%",
-            fontSize: "1.3rem",
-            fontFamily: "游ゴシック",
-            fontWeight: 600,
-            borderRadius: "5rem",
-          }}
-        >
+        </ItemBox>
+        <PostBtn variant="contained" type="submit">
           投稿
-        </Button>
-      </Box>
+        </PostBtn>
+      </StyledBox>
       {success && (
         <Snackbar
           open={open}
@@ -363,11 +291,37 @@ const CreateField = () => {
           </Alert>
         </Snackbar>
       )}
-    </Box>
+    </Container>
   );
 };
 
+const Container = styled(Box)(({ theme }) => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundImage: "url(../img/AvoLogo1.png)",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center",
+  backgroundSize: "100%",
+  flexDirection: "column",
+}));
+
 const StyledBox = styled(Box)(({ theme }) => ({
+  width: "60%",
+  backgroundColor: "#ffffff",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  marginTop: "7rem",
+  marginBottom: "7rem",
+  paddingTop: "4rem",
+  paddingBottom: "4rem",
+  opacity: 0.95,
+  borderRadius: "1.5rem",
+}));
+
+const ItemBox = styled(Box)(({ theme }) => ({
   width: "100%",
   component: "label",
   display: "flex",
@@ -376,7 +330,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
   marginBottom: "2rem",
 }));
 
-const StyledTitle = styled(Typography)(({ theme }) => ({
+const Title = styled(Typography)(({ theme }) => ({
   width: "30%",
   paddingLeft: "10%",
   display: "flex",
@@ -387,23 +341,32 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
   fontWeight: "bold",
 }));
 
-const StyledImgBtn = styled("span")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "cenetr",
-  fontFamily: "游ゴシック",
-  fontSize: "1.5rem",
-  fontWeight: "bold",
-  variant: "text",
-  cursor: "pointer",
+const ItemField = styled(TextField)(({ theme }) => ({
+  width: "50%",
+  [theme.breakpoints.down("sm")]: {
+    width: "75%",
+  },
 }));
 
-const StyledImgBox = styled(Box)(({ theme }) => ({
-  width: "100%",
-  component: "label",
-  display: "flex",
-  justifyContent: "cenetr",
-  marginBottom: "2rem",
+const PostBtn = styled(Button)(({ theme }) => ({
+  width: "50%",
+  fontSize: "1.3rem",
+  fontFamily: "游ゴシック",
+  fontWeight: 600,
+  borderRadius: "5rem",
+}));
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  width: "13rem",
+  height: "13rem",
+  [theme.breakpoints.down("md")]: {
+    width: "12rem",
+    height: "12rem",
+  },
+  [theme.breakpoints.down("sm")]: {
+    width: "10rem",
+    height: "10rem",
+  },
 }));
 
 export default CreateField;
