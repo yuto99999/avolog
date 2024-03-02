@@ -1,6 +1,5 @@
 import * as React from "react";
 import useProfile from "@/lib/useProfile";
-import useUser from "@/lib/useUser";
 import {
   Avatar,
   Box,

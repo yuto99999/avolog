@@ -10,21 +10,17 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import BedtimeIcon from "@mui/icons-material/Bedtime";
-import LightModeIcon from "@mui/icons-material/LightMode";
 import DeleteBtn from "../Btn/delateBtn";
 import EditBtn from "../Btn/editBtn";
 
 interface Mypost {
   id: string;
-  address: string;
   image: string;
-  budgetL: string;
-  budgetD: string;
   genre: string;
   name: string;
-  prefecture: string;
-  rate: number;
+  item: string;
+  make: string;
+  intro: string;
   createdAt: Timestamp;
   user: {
     name: string;
@@ -33,13 +29,13 @@ interface Mypost {
   };
 }
 
-const MyPost = () => {
-  const { documents: myPosts } = useMypost("Shop");
+const MyRecipe = () => {
+  const { documents: myRecipe } = useMypost("Recipe");
 
   return (
     <Box p={3} pl={12} pr={12} display="flex">
       <Grid container spacing={5}>
-        {myPosts.map((myPost: Mypost) => (
+        {myRecipe.map((myPost: Mypost) => (
           <Grid
             item
             xs={12}
@@ -97,48 +93,8 @@ const MyPost = () => {
                 fontWeight="bold"
                 fontSize="0.9rem"
               >
-                {myPost.address}
+                {myPost.genre}
               </Typography>
-              <Box display="flex" pl={1} pt={0.3}>
-                <Box p={0.7} display="flex" alignItems="center">
-                  <LightModeIcon fontSize="small" />
-                  <Typography
-                    pl={0.5}
-                    fontFamily="游ゴシック"
-                    fontWeight="bold"
-                    fontSize="0.9rem"
-                  >
-                    {myPost.budgetL}
-                  </Typography>
-                </Box>
-                <Box p={0.7} display="flex" alignItems="center">
-                  <BedtimeIcon fontSize="small" />
-                  <Typography
-                    pl={0.5}
-                    fontFamily="游ゴシック"
-                    fontWeight="bold"
-                    fontSize="0.9rem"
-                  >
-                    {myPost.budgetD}
-                  </Typography>
-                </Box>
-              </Box>
-              <Box pb={1.2} pl={1.5} display="flex" alignItems="center">
-                <Rating
-                  name="half-rating-read"
-                  defaultValue={myPost.rate}
-                  precision={0.1}
-                  readOnly
-                />
-                <Typography
-                  pl={1}
-                  fontFamily="游ゴシック"
-                  fontWeight="bold"
-                  fontSize="0.9rem"
-                >
-                  {myPost.rate}
-                </Typography>
-              </Box>
             </Card>
           </Grid>
         ))}
@@ -154,4 +110,4 @@ const StyledImage = styled("img")(({ theme }) => ({
   objectFit: "cover",
 }));
 
-export default MyPost;
+export default MyRecipe;
