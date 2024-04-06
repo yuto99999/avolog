@@ -271,6 +271,7 @@ const CreateField = () => {
       {success && (
         <Snackbar
           open={open}
+          onClose={handleClose}
           autoHideDuration={6000}
           anchorOrigin={{ vertical, horizontal }}
         >
