@@ -38,7 +38,6 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         setSuccess(true);
-        console.log("ログインしました");
         console.log(user);
         setOpen(true);
         setTimeout(() => {
