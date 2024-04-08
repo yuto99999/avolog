@@ -1,5 +1,6 @@
 import * as React from "react";
 import useProfile from "@/lib/useProfile";
+import LogoutBtn from "../Auth/Logout/logout";
 import {
   Avatar,
   Box,
@@ -85,28 +86,42 @@ const AccountMenu = () => {
         {profile ? <User /> : <LoginBtn />}
         <Divider />
         <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <PersonIcon fontSize="small" />
-          </ListItemIcon>
-          <StyledLink href={"/auth/profile"}>プロフィール設定</StyledLink>
+          <StyledLink href={"/auth/profile"}>
+            <ListItemIcon>
+              <PersonIcon fontSize="small" />
+            </ListItemIcon>
+            <Typography>プロフィール設定</Typography>
+          </StyledLink>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <CreateIcon fontSize="small" />
-          </ListItemIcon>
-          <StyledLink href={"/post/create"}>投稿</StyledLink>
+          <StyledLink href={"/post/create"}>
+            <ListItemIcon>
+              <CreateIcon fontSize="small" />
+            </ListItemIcon>
+            <Typography>お店の投稿</Typography>
+          </StyledLink>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <StyledLink href={"/post/recipe"}>
+            <ListItemIcon>
+              <CreateIcon fontSize="small" />
+            </ListItemIcon>
+            <Typography>レシピの投稿</Typography>
+          </StyledLink>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <StyledLink href={"/contact"}>
+            <ListItemIcon>
+              <EmailIcon fontSize="small" />
+            </ListItemIcon>
+            <Typography>お問い合わせ</Typography>
+          </StyledLink>
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          <StyledLink href={"/auth/logout"}>ログアウト</StyledLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <EmailIcon fontSize="small" />
-          </ListItemIcon>
-          <StyledLink href={"/contact"}>お問い合わせ</StyledLink>
+          <LogoutBtn />
         </MenuItem>
       </Menu>
     </React.Fragment>
@@ -124,6 +139,9 @@ const StyledLink = styled(Link)(({ theme }) => ({
   fontFamily: "游ゴシック",
   fontWeight: 500,
   letterSpacing: 1,
+  display: "flex",
+  alignItems: "center",
+  paddingTop: 5,
 }));
 
 export default AccountMenu;
