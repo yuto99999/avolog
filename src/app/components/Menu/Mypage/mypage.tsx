@@ -1,6 +1,14 @@
 "use client";
 import * as React from "react";
-import { Box, Typography, Tab, Tabs, Avatar, styled } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Tab,
+  Tabs,
+  Avatar,
+  styled,
+  Button,
+} from "@mui/material";
 import Post from "./Post/post";
 import MyRecipe from "./Recipe/myRecipe";
 import useProfile from "@/lib/useProfile";
@@ -43,17 +51,18 @@ const Mypage = () => {
 
   return (
     <Box width="100%" mt="12vh" pt="1rem">
-      <Box px={10} py={5} display="flex" alignItems="center">
-        <StyledAvatar src={profile ? profile.image : ""} alt="アイコン" />
-        <Typography
-          fontFamily="游ゴシック"
-          fontWeight="bold"
-          fontSize="4.5rem"
-          letterSpacing={1}
-          ml={5}
-        >
-          {profile ? profile.name : ""}
-        </Typography>
+      <Box
+        px={10}
+        py={5}
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Box display="flex" alignItems="center">
+          <StyledAvatar src={profile ? profile.image : ""} alt="アイコン" />
+          <UserName>{profile ? profile.name : ""}</UserName>
+        </Box>
+        <ProfileBtn href="/auth/profile">プロフィールを編集</ProfileBtn>
       </Box>
 
       <Box
@@ -83,6 +92,27 @@ const Mypage = () => {
 const StyledAvatar = styled(Avatar)(({ theme }) => ({
   width: 150,
   height: 150,
+}));
+
+const UserName = styled(Typography)(({ theme }) => ({
+  fontFamily: "游ゴシック",
+  fontWeight: "bold",
+  fontSize: "4.5rem",
+  letterSpacing: 1,
+  marginLeft: 45,
+}));
+
+const ProfileBtn = styled(Button)(({ theme }) => ({
+  fontFamily: "游ゴシック",
+  fontWeight: "bold",
+  fontSize: "1.7rem",
+  letterSpacing: 1,
+  color: "#000000",
+  marginRight: 30,
+  paddingRight: 30,
+  paddingLeft: 30,
+  backgroundColor:"#F2F5F6",
+  borderRadius:10
 }));
 
 export default Mypage;
