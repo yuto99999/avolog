@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import { Box, Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -14,7 +14,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const Logout = () => {
+const LogoutBtn = () => {
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [open, setOpen] = useState(false);
@@ -28,12 +28,11 @@ const Logout = () => {
     signOut(auth)
       .then(() => {
         setSuccess(true);
-        setError(false);
-        console.log("ログアウト成功");
         setOpen(true);
         setTimeout(() => {
           router.push("/");
         }, 1200);
+        router.refresh();
       })
       .catch((error) => {
         console.log(error);
@@ -54,56 +53,15 @@ const Logout = () => {
   };
 
   return (
-    <Box
-      width="100%"
-      height="100vh"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      sx={{
-        backgroundImage: "url(../img/AvoLogo1.png)",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "100%",
-      }}
-    >
-      <Box
-        width="40%"
-        bgcolor="#ffffff"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        pt={8}
-        pb={8}
-        sx={{ opacity: 0.95, borderRadius: 5 }}
+    <>
+      <Button
+        onClick={() => {
+          doLogout();
+        }}
+        sx={{ color: "black", fontSize: "1rem" }}
       >
-        <Typography
-          fontSize="2.5rem"
-          fontFamily="游ゴシック"
-          fontWeight="bold"
-          color="#000000"
-          mb={2.5}
-        >
-          ログアウト
-        </Typography>
-        <Button
-          variant="contained"
-          onClick={() => {
-            doLogout();
-          }}
-          sx={{
-            width: "50%",
-            mt: 4,
-            mb: 4,
-            fontSize: "1.3rem",
-            fontFamily: "游ゴシック",
-            fontWeight: 600,
-            borderRadius: "5rem",
-          }}
-        >
-          ログアウト
-        </Button>
-      </Box>
+        ログアウト
+      </Button>
       {success && (
         <Snackbar
           open={open}
@@ -127,8 +85,8 @@ const Logout = () => {
           </Alert>
         </Snackbar>
       )}
-    </Box>
+    </>
   );
 };
 
-export default Logout;
+export default LogoutBtn;
