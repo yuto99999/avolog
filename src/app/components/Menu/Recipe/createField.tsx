@@ -5,11 +5,14 @@ import { store, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import useProfile from "@/lib/useProfile";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { PrefList } from "@/data/Prefectures";
+import { BudgetList } from "@/data/Budget";
 import { GenreList } from "@/data/Genre";
 import {
   Box,
   TextField,
   Button,
+  Rating,
   FormControl,
   Select,
   MenuItem,
@@ -20,7 +23,10 @@ import {
 } from "@mui/material";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import BedtimeIcon from "@mui/icons-material/Bedtime";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { RateList } from "@/data/RateList";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -35,10 +41,12 @@ const CreateField = () => {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<File | null>();
   const [name, setName] = useState("");
-  const [intro, setIntro] = useState("");
-  const [item, setItem] = useState("");
+  const [prefecture, setPrefecture] = useState("");
+  const [address, setAddress] = useState("");
   const [genre, setGenre] = useState("");
-  const [make, setMake] = useState("");
+  const [budgetL, setBudgetL] = useState("");
+  const [budgetD, setBudgetD] = useState("");
+  const [rate, setRate] = useState(0);
 
   const vertical = "top";
   const horizontal = "right";
@@ -55,7 +63,7 @@ const CreateField = () => {
     const firestorage = storage;
 
     try {
-      const docRef = collection(firestore, "Recipe");
+      const docRef = collection(firestore, "Shop");
 
       if (image) {
         const imageRef = ref(firestorage, image.name);
@@ -64,10 +72,12 @@ const CreateField = () => {
             await addDoc(docRef, {
               image: url,
               name,
-              intro,
-              item,
+              prefecture,
+              address,
               genre,
-              make,
+              budgetL,
+              budgetD,
+              rate,
               createdAt: Timestamp.fromDate(new Date()),
               user: {
                 name: profile?.name,
@@ -81,10 +91,12 @@ const CreateField = () => {
         await addDoc(docRef, {
           image: "",
           name,
-          intro,
-          item,
+          prefecture,
+          address,
           genre,
-          make,
+          budgetL,
+          budgetD,
+          rate,
           createdAt: Timestamp.fromDate(new Date()),
           user: {
             name: profile?.name,
@@ -111,8 +123,24 @@ const CreateField = () => {
     }
   };
 
+  const handleChangePref = (event: SelectChangeEvent) => {
+    setPrefecture(event.target.value as string);
+  };
+
   const handleChangeG = (event: SelectChangeEvent) => {
     setGenre(event.target.value as string);
+  };
+
+  const handleChangeBL = (event: SelectChangeEvent) => {
+    setBudgetL(event.target.value as string);
+  };
+
+  const handleChangeBD = (event: SelectChangeEvent) => {
+    setBudgetD(event.target.value as string);
+  };
+
+  const handleChangeR = (event: SelectChangeEvent<number>) => {
+    setRate(event.target.value as number);
   };
 
   const handleClose = (
@@ -151,11 +179,31 @@ const CreateField = () => {
           </Box>
         </ItemBox>
         <ItemBox>
-          <Title>レシピのタイトル</Title>
+          <Title>店名</Title>
           <ItemField
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </ItemBox>
+        <ItemBox>
+          <Title>都道府県</Title>
+          <FormControl sx={{ width: "50%" }}>
+            <Select required value={prefecture} onChange={handleChangePref}>
+              {PrefList.map((prefecture) => (
+                <MenuItem key={prefecture.prefCode} value={prefecture.prefName}>
+                  {prefecture.prefName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </ItemBox>
+        <ItemBox>
+          <Title>住所</Title>
+          <ItemField
+            required
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
           />
         </ItemBox>
         <ItemBox>
@@ -171,36 +219,50 @@ const CreateField = () => {
           </FormControl>
         </ItemBox>
         <ItemBox>
-          <Title>紹介文</Title>
-          <ItemField
-            multiline
-            rows={5}
-            required
-            value={intro}
-            onChange={(e) => setIntro(e.target.value)}
-          />
+          <Title>予算</Title>
+          <Box width="50%" display="flex" alignItems="center">
+            <LightModeIcon fontSize="large" />
+            <FormControl sx={{ width: "40%", ml: "2%", mr: "2%" }}>
+              <Select required value={budgetL} onChange={handleChangeBL}>
+                {BudgetList.map((budget) => (
+                  <MenuItem key={budget.code} value={budget.price}>
+                    {budget.price}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <BedtimeIcon fontSize="large" />
+            <FormControl sx={{ width: "40%", ml: "2%" }}>
+              <Select required value={budgetD} onChange={handleChangeBD}>
+                {BudgetList.map((budget) => (
+                  <MenuItem key={budget.code} value={budget.price}>
+                    {budget.price}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
         </ItemBox>
         <ItemBox>
-          <Title>材料</Title>
-          <ItemField
-            placeholder="例)アボカド 1個"
-            multiline
-            rows={15}
-            required
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
+          <Title>評価</Title>
+          <Rating
+            defaultValue={3}
+            precision={0.1}
+            value={rate}
+            size="large"
+            onChange={(e, newValue) => {
+              setRate(newValue !== null ? newValue : 0);
+            }}
           />
-        </ItemBox>
-        <ItemBox>
-          <Title>作り方</Title>
-          <ItemField
-            placeholder="例)1. アボカドを4等分する "
-            multiline
-            rows={15}
-            required
-            value={make}
-            onChange={(e) => setMake(e.target.value)}
-          />
+          <FormControl sx={{ width: "10%", ml: "2%" }}>
+            <Select value={rate} onChange={handleChangeR}>
+              {RateList.map((rate) => (
+                <MenuItem key={rate.code} value={rate.rate}>
+                  {rate.rate}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </ItemBox>
         <PostBtn variant="contained" type="submit">
           投稿
@@ -209,6 +271,7 @@ const CreateField = () => {
       {success && (
         <Snackbar
           open={open}
+          onClose={handleClose}
           autoHideDuration={6000}
           anchorOrigin={{ vertical, horizontal }}
         >
@@ -238,6 +301,10 @@ const Container = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  backgroundImage: "url(../img/AvoLogo1.png)",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center",
+  backgroundSize: "100%",
   flexDirection: "column",
 }));
 
