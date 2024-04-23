@@ -98,15 +98,7 @@ const AccountMenu = () => {
             <ListItemIcon>
               <CreateIcon fontSize="small" />
             </ListItemIcon>
-            <Typography>お店の投稿</Typography>
-          </StyledLink>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <StyledLink href={"/post/recipe"}>
-            <ListItemIcon>
-              <CreateIcon fontSize="small" />
-            </ListItemIcon>
-            <Typography>レシピの投稿</Typography>
+            <Typography>投稿</Typography>
           </StyledLink>
         </MenuItem>
         <MenuItem onClick={handleClose}>
@@ -134,6 +126,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
+  width: "100%",
   textDecoration: "none",
   color: "#000000",
   fontFamily: "游ゴシック",
