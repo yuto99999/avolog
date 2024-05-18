@@ -102,7 +102,13 @@ const AccountMenu = () => {
           </StyledLink>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <StyledLink href={"/contact"}>
+          <StyledLink
+            href={
+              "https://docs.google.com/forms/d/e/1FAIpQLScakIynkuBQVKy6mU-VnEeLuGNeeDKdr9zYN_Fa8E_Vs3xm7g/viewform"
+            }
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <ListItemIcon>
               <EmailIcon fontSize="small" />
             </ListItemIcon>
